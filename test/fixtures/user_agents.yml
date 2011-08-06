@@ -1,4 +1,5 @@
-internet explorer:
+:msie:
+  :full_name: Internet Explorer
   '3.0':
     - Mozilla/3.0 (compatible; MSIE 3.0; Windows NT 5.0)
     - Mozilla/2.0 (compatible; MSIE 3.0; Windows 95)
