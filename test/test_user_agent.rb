@@ -8,7 +8,7 @@ describe "AgentDetector" do
     user_agent('').failed?.must_equal true 
   end
   
-  # dynamic set of tests that use the user_agent fixture to generate themselves
+  # uses the user_agent.yml fixture to generate massive amounts of tests
   fixture(:user_agents).each do |browser, versions|
     describe "#{versions.delete(:full_name) || browser}" do
       versions.each do |version, list|
@@ -18,6 +18,7 @@ describe "AgentDetector" do
             
             if version.eql?(:invalid)
               ua.failed?.must_equal true
+              ua.version.must_be_nil
             
             else
               ua.version.must_equal version
