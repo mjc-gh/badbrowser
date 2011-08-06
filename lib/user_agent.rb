@@ -9,7 +9,7 @@ end
 class AgentDetector
   attr_reader :user_agent, :version
   
-  def initialize(str)
+  def initialize str
     @user_agent = str.to_s
     @user_agent.strip!
     
@@ -40,6 +40,23 @@ class AgentDetector
   private 
   
   def detect_user_agent
+    case @user_agent
+    when /MSIE/
+      @msie = true
+      if match = match_or_fail(/MSIE (\d\.\w)/)
+        @version = match.to_a.last 
+      end
+      
+    else
+      @failed = true
+      
+    end
+  end
+  
+  def match_or_fail regexp
+    match = @user_agent.match regexp
+    @failed = true unless match
     
+    match
   end
 end
