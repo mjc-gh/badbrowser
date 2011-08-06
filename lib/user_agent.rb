@@ -43,8 +43,8 @@ class AgentDetector
     case @user_agent
     when /MSIE/
       @msie = true
-      if match = match_or_fail(/MSIE (\d\.\w)/)
-        @version = match.to_a.last 
+      if match = match_or_fail(/MSIE (\d\.\w{1,3})/)
+        @version = match.to_a.last
       end
       
     else
