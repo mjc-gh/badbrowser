@@ -24,28 +24,17 @@ class AgentDetector
     @failed
   end
   
-  def good?
-    raise Exception.new('implement me')
-  end
-  
-  def bad?
-    raise Exception.new('implement me')
-  end
-  
   def msie?; @msie; end  
-  def gecko?; @gecko; end # aka firefox
+  def gecko?; @gecko; end
   def chrome?; @firefox; end
   def safari?; @safari; end
   
   private 
   
   def detect_user_agent
-    case @user_agent
-    when /MSIE/
+    if match = match_or_fail(/MSIE (\d{1,2}\.\w{1,3})/)
       @msie = true
-      if match = match_or_fail(/MSIE (\d\.\w{1,3})/)
-        @version = match.to_a.last
-      end
+      @version = match.last
       
     else
       @failed = true
@@ -55,8 +44,9 @@ class AgentDetector
   
   def match_or_fail regexp
     match = @user_agent.match regexp
-    @failed = true unless match
     
-    match
+    @failed = true and return nil unless match
+    
+    match.to_a
   end
 end
