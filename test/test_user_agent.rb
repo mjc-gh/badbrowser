@@ -17,7 +17,7 @@ describe "AgentDetector" do
             ua = user_agent(agent)
             
             if version.eql?(:invalid)
-              us.failed?.must_equal true
+              ua.failed?.must_equal true
             
             else
               ua.version.must_equal version
