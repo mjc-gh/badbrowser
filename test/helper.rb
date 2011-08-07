@@ -9,7 +9,7 @@ require 'app'
 require 'lib/user_agent.rb'
 
 
-def fixture(name)
+def fixture name
   YAML.load( File.open(File.join('test', 'fixtures', "#{name}.yml"), 'r+').read )
 end
 
