@@ -30,6 +30,6 @@ print " done\n"
 
 print "Writing File... "
 File.open(file, 'w+') { |file|
-  file.puts YAML.dump(:verions => versions)
+  file.puts YAML.dump(:versions => versions)
 }
 print " done\n"
