@@ -7,7 +7,7 @@ describe "AgentDetector" do
   end
   
   user_agent_fixtures.each do |fixture, content|
-    next unless content[:versions]
+    next unless content && content[:versions]
     browser = fixture.sub(/\.yml/, '')
     
     describe "#{content[:fullname] || fixture}" do
