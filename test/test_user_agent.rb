@@ -1,17 +1,17 @@
 require File.join(File.dirname(__FILE__), 'helper')
 
-
-
 describe "AgentDetector" do
   it "marks as failed with empty user agents" do
     user_agent(nil).failed?.must_equal true
     user_agent('').failed?.must_equal true 
   end
   
-  # uses the user_agent.yml fixture to generate massive amounts of tests
-  fixture(:user_agents).each do |browser, versions|
-    describe "#{versions.delete(:full_name) || browser}" do
-      versions.each do |version, list|
+  user_agent_fixtures.each do |fixture, content|
+    next unless content[:versions]
+    browser = fixture.sub(/\.yml/, '')
+    
+    describe "#{content[:fullname] || fixture}" do
+      content[:versions].each do |version, list|
         it "matches #{version}" do
           list.each do |agent|
             ua = user_agent(agent)
@@ -25,9 +25,9 @@ describe "AgentDetector" do
               ua.send("#{browser}?").wont_be_nil
               
             end
-          end          
-        end        
-      end
-    end
-  end  
+          end
+        end # it block
+      end # each version
+    end # describe block
+  end # each fixture 
 end
