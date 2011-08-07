@@ -25,7 +25,7 @@ class AgentDetector
   end
   
   def msie?; @msie; end  
-  def gecko?; @gecko; end
+  def firefox?; @firefox; end
   def chrome?; @chrome; end
   def safari?; @safari; end
   def opera?; @opera; end
@@ -39,6 +39,10 @@ class AgentDetector
     
     elsif match = match_or_fail(/Chrome\/([\d{1,3}\.]+)/)
       @chrome = true
+      @version = match.last
+
+    elsif match = match_or_fail(/Firefox[ \(\/]*([a-z0-9\.\-\+]*)/i)
+      @firefox = true
       @version = match.last
     
     else
