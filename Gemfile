@@ -1,5 +1,9 @@
-gem "sinatra"
+source :rubygems
+
+gem 'sinatra'
 
 # for testing stuff
-gem "minitest"
-gem "turn"
+group :test do
+  gem 'minitest'
+  gem 'purdytest'#, :git => 'git://github.com/dudleyf/purdytest.git'
+end
