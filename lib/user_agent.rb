@@ -12,19 +12,16 @@ class AgentDetector
   def initialize str
     @user_agent = str.to_s
     @user_agent.strip!
+    @failed = true
     
-    unless @user_agent.empty?
-      detect_user_agent
-    else
-      @failed = true 
-    end
+    detect_user_agent unless @user_agent.empty?
   end
   
   def failed?
-    !!@failed
+    @failed
   end
   
-  def msie?; @msie; end  
+  def msie?; @msie; end
   def firefox?; @firefox; end
   def chrome?; @chrome; end
   def safari?; @safari; end
@@ -33,29 +30,23 @@ class AgentDetector
   private 
   
   def detect_user_agent
-    if match = match_or_fail(/MSIE (\d{1,2}\.\w{1,3})/)
-      @msie = true
-      @version = match.last
-    
-    elsif match = match_or_fail(/Chrome\/([\d{1,3}\.]+)/)
-      @chrome = true
-      @version = match.last
-
-    elsif match = match_or_fail(/Firefox[ \(\/]*([a-z0-9\.\-\+]*)/i)
-      @firefox = true
-      @version = match.last
-    
+    if match_for(:msie, /MSIE (\d{1,2}\.[\dbB]{1,3})/) or
+       match_for(:chrome, /Chrome\/([\d{1,3}\.]+)/) or
+       match_for(:firefox, /Firefox[ \(\/]*([a-z0-9\.\-\+]*)/i) or
+       match_for(:opera, /Version\/(\d{1,2}\.\d{1,2})/) or
+       match_for(:opera, /Opera[ \(\/]*(\d{1,2}\.\d{1,2})/)
+      
     else
       @failed = true
       
     end
   end
   
-  def match_or_fail regexp
+  def match_for browser, regexp
     match = @user_agent.match regexp
+    return false unless match
     
-    @failed = true and return nil unless match
-    
-    match.to_a
+    instance_variable_set "@#{browser}", true
+    @version = match.to_a.last
   end
 end
