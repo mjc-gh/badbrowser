@@ -19,6 +19,6 @@ def user_agent_fixtures
   }]
 end
 
-def user_agent(str) 
-  AgentDetector.new(str)
+def user_agent str
+  AgentDetector.new str
 end
