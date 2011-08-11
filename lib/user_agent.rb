@@ -1,7 +1,7 @@
 module Sinatra
   module UserAgent
     def user_agent
-      @user_agent ||= AgentDetector.new(request.user_agent || '')
+      @user_agent ||= AgentDetector.new(request.user_agent)
     end
   end
 end
@@ -17,9 +17,7 @@ class AgentDetector
     @failed = @version.nil?
   end
   
-  def failed?
-    @failed
-  end
+  def failed?; @failed; end
   
   def msie?; @msie; end
   def firefox?; @firefox; end
@@ -30,7 +28,7 @@ class AgentDetector
   protected 
   
   def detect_user_agent
-    # "jump away" from for Opera (and Safari?) 
+    # "jump away" for Opera (and Safari?) 
     # String#include? is used here since it's quicker than RegEx at this point in detection
     return parse_opera if @user_agent.include?('Opera')
     
