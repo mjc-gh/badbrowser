@@ -30,3 +30,7 @@ TESTING
 To run the test simply run the following: 
 
     rake test
+	
+To skip a Browser user-agent test, provide a SKIP argument
+
+    rake test SKIP=opera,safari
