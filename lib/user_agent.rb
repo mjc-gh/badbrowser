@@ -37,10 +37,8 @@ class AgentDetector
     match_for(:chrome, /Chrome\/([\d{1,3}\.]+)*/)
   end
   
-  # We need a special method just for Opera since
-  # it's user agent strings are a nightmare (see fixtures)
-  # We will also always set the browser to @opera since we 
-  # know it is opera at this point
+  # We need a special method just for Opera since it's user agent strings are a nightmare (see fixtures)
+  # We will also always set the browser to @opera since we know it is opera at this point
   def parse_opera
     match = match_agent(/Version\/(\d{1,2}\.\d{1,2})/) || match_agent(/Opera[ \(\/]*(\d{1,2}\.\d{1,2}[u1]*)/)
     
