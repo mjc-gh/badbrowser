@@ -10,34 +10,28 @@ describe "AgentDetector" do
     next unless versions
     
     browser = fixture.sub(/\.yml/, '')
-    next if ENV['SKIP'].include? browser
+    next if ENV['SKIP'].to_s.include? browser
     
     describe "#{browser.capitalize}" do
       versions.each do |version, list|
 
-        # this isn't terribly DRY but it results better generated tests
-        if version.eql?(:invalid)
-          it "marks invalid as failed" do
-            list.each do |agent|
-              ua = user_agent agent
-              
-              ua.failed?.must_equal true
-              ua.version.must_be_nil
-            end
-          end
-        elsif version.empty?
+        # this isn't terribly DRY but it results better generated tests    
+        if version.empty?
           it "matches browser with no versions" do
             list.each do |agent|
               ua = user_agent agent
-              
-              # fill in the blanks
+
+              ua.failed?.must_equal true
+              ua.version.must_be_nil
+              ua.send("#{browser}?").wont_be_nil
             end
           end
         else
           it "matches #{version}" do
             list.each do |agent|
               ua = user_agent agent
-              
+
+              ua.failed?.must_equal false
               ua.version.must_equal version
               ua.send("#{browser}?").wont_be_nil
             end
