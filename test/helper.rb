@@ -1,5 +1,6 @@
 gem "minitest"
 require 'minitest/autorun'
+require 'minitest/benchmark'
 require 'purdytest'
 require 'yaml'
 

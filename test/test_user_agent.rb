@@ -26,7 +26,7 @@ describe "AgentDetector" do
               ua.send("#{browser}?").wont_be_nil
             end
           end
-        else
+        else        
           it "matches #{version}" do
             list.each do |agent|
               ua = user_agent agent
@@ -40,5 +40,17 @@ describe "AgentDetector" do
         
       end # each version
     end # describe block
+    
+    describe "#{browser.capitalize} performance" do
+      all = []
+      versions.each { |v, l| all += l }
+      
+      bench_performance_linear 'matching' do |n|
+        n.times do
+          user_agent all[rand(all.size - 1)]
+        end
+      end
+    end
+    
   end # each fixture 
 end
