@@ -42,12 +42,12 @@ describe "AgentDetector" do
     end # describe block
     
     describe "#{browser.capitalize} performance" do
-      all = []
-      versions.each { |v, l| all += l }
+      agents = []
+      versions.each { |v, list| agents += list }
       
       bench_performance_linear 'matching' do |n|
         n.times do
-          user_agent all[rand(all.size - 1)]
+          user_agent agents[ rand(agents.size - 1) ]
         end
       end
     end
