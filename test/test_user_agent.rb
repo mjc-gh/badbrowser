@@ -6,6 +6,10 @@ describe "AgentDetector" do
     user_agent('').failed?.must_equal true 
   end
   
+  it "fails on > 500 character agents" do
+    user_agent('A' * 501).failed?.must_equal true
+  end
+  
   user_agent_fixtures.each do |fixture, versions|
     next unless versions
     

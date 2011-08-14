@@ -13,7 +13,7 @@ class AgentDetector
     @user_agent = str.to_s
     @user_agent.strip!
 
-    detect_user_agent unless @user_agent.empty?
+    detect_user_agent unless @user_agent.empty? || @user_agent.size > 500
     @failed = @version.nil?
   end
   
