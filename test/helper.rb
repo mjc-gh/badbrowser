@@ -1,17 +1,17 @@
-gem "minitest"
+gem 'minitest'
 require 'minitest/autorun'
 require 'minitest/benchmark'
 require 'purdytest'
 require 'yaml'
 
 
-$:.unshift File.expand_path('..', File.dirname(__FILE__))
-require 'app'
-require 'lib/user_agent.rb'
+path = File.expand_path('..', File.dirname(__FILE__))
+require File.join path, 'app'
+require File.join path, 'lib/user_agent.rb'
 
 
 def fixture name
-  YAML.load( File.open(File.join('test', 'fixtures', "#{name}.yml"), 'r+').read )
+  YAML.load( File.open(File.join('test', 'fixtures', '#{name}.yml'), 'r+').read )
 end
 
 def user_agent_fixtures

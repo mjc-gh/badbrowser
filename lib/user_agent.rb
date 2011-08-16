@@ -1,10 +1,5 @@
-module Sinatra
-  module UserAgent
-    def user_agent
-      @user_agent ||= AgentDetector.new(request.user_agent)
-    end
-  end
-end
+# load support libs
+Dir[ "#{File.dirname(__FILE__)}/user_agent/*.rb" ].each { |file| require file }
 
 class AgentDetector
   attr_reader :user_agent, :version, :match
@@ -43,8 +38,8 @@ class AgentDetector
   def parse_opera
     match = match_agent(/Version\/(\d{1,2}\.\d{1,2})/) || match_agent(/Opera[ \(\/]*(\d{1,2}\.\d{1,2}[u1]*)/)
     
-    @version = match.last if match
     @opera = true
+    version = match.last if match
   end
   
   # version map for Safari 
@@ -60,10 +55,10 @@ class AgentDetector
     unless match_for(:safari, /Version\/([\d{1,3}\.[dp1]*]+) Safari/)
       if match = match_agent(/AppleWebKit\/(\d{2,3}[\.\d{0,2}]*)/)
         @safari = true
-        
+
         # find may return nil so this is a two step process
-        @version = @@safari_map.find { |v, pair| match.last >= pair.first && match.last <= pair.last }
-        @version = @version.first.to_s if @version
+        result = @@safari_map.find { |v, pair| match.last >= pair.first && match.last <= pair.last }
+        version = result.first.to_s if result
         
       elsif
         @safari = @user_agent.include?('Safari')
@@ -77,13 +72,12 @@ class AgentDetector
   def match_for browser, regex
     match = match_agent regex
 
-    @version = match.to_a.last if match && match.size > 1
     instance_variable_set "@#{browser}", true if match
-    #@match = match
+    version = match.to_a.last if match && match.size > 1
   end
   
   # Helper to make regex parsing a bit friendlier. It will convert the results to
-  # an array and remove any nil or empty elements
+  # an array and remove any nil or empty elements (or return nil if not match, the default behaviour)
   def match_agent regex
     match = @user_agent.match regex
     return nil unless match
@@ -92,5 +86,9 @@ class AgentDetector
     match.reject! { |m| m.nil? || m.empty? }
     
     match
+  end
+  
+  def version= version
+    @version = BrowserVersion.new version
   end
 end
