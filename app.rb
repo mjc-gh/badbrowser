@@ -8,7 +8,7 @@ class BadBrowser < Sinatra::Base
 
   helpers do
     def user_agent agent
-      @user_agent ||= AgentDetector.new agent
+      @user_agent ||= UserAgent.new agent
     end
   end
 

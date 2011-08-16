@@ -1,7 +1,7 @@
 # load support libs
 Dir[ "#{File.dirname(__FILE__)}/user_agent/*.rb" ].each { |file| require file }
 
-class AgentDetector
+class UserAgent
   attr_reader :user_agent, :version, :match
   
   def initialize str
@@ -60,8 +60,8 @@ class AgentDetector
         result = @@safari_map.find { |v, pair| match.last >= pair.first && match.last <= pair.last }
         version = result.first.to_s if result
         
-      elsif
-        @safari = @user_agent.include?('Safari')
+      elsif @user_agent.include?('Safari')
+        @safari = true
         
       end
     end
