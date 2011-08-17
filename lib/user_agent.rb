@@ -2,7 +2,7 @@
 Dir[ "#{File.dirname(__FILE__)}/user_agent/*.rb" ].each { |file| require file }
 
 class UserAgent
-  attr_reader :user_agent, :version, :match
+  attr_reader :version, :match
   
   def initialize str
     @user_agent = str.to_s
@@ -19,6 +19,8 @@ class UserAgent
   def chrome?; @chrome; end
   def safari?; @safari; end
   def opera?; @opera; end
+  
+  def to_s; @user_agent; end
   
   protected 
   
