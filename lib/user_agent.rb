@@ -40,8 +40,8 @@ class UserAgent
   def parse_opera
     match = match_agent(/Version\/(\d{1,2}\.\d{1,2})/) || match_agent(/Opera[ \(\/]*(\d{1,2}\.\d{1,2}[u1]*)/)
     
-    @opera = true
     set_version match.last if match
+    @opera = true
   end
   
   # version map for Safari 
@@ -56,11 +56,11 @@ class UserAgent
   def parse_safari
     unless match_for(:safari, /Version\/([\d{1,3}\.[dp1]*]+) Safari/)
       if match = match_agent(/AppleWebKit\/(\d{2,3}[\.\d{0,2}]*)/)
-        @safari = true
-
         # find may return nil so this is a two step process
         result = @@safari_map.find { |v, pair| match.last >= pair.first && match.last <= pair.last }
         set_version result.first.to_s if result
+        
+        @safari = true
         
       elsif @user_agent.include?('Safari') || @user_agent.include?('AppleWebKit')
         @safari = true
