@@ -21,5 +21,5 @@ def user_agent_fixtures
 end
 
 def user_agent str
-  AgentDetector.new str
+  UserAgent.new str
 end
