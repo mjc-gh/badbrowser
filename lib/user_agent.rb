@@ -39,7 +39,7 @@ class UserAgent
     match = match_agent(/Version\/(\d{1,2}\.\d{1,2})/) || match_agent(/Opera[ \(\/]*(\d{1,2}\.\d{1,2}[u1]*)/)
     
     @opera = true
-    version = match.last if match
+    set_version match.last if match
   end
   
   # version map for Safari 
@@ -58,9 +58,9 @@ class UserAgent
 
         # find may return nil so this is a two step process
         result = @@safari_map.find { |v, pair| match.last >= pair.first && match.last <= pair.last }
-        version = result.first.to_s if result
+        set_version result.first.to_s if result
         
-      elsif @user_agent.include?('Safari')
+      elsif @user_agent.include?('Safari') || @user_agent.include?('AppleWebKit')
         @safari = true
         
       end
@@ -73,7 +73,7 @@ class UserAgent
     match = match_agent regex
 
     instance_variable_set "@#{browser}", true if match
-    version = match.to_a.last if match && match.size > 1
+    set_version match.to_a.last if match && match.size > 1
   end
   
   # Helper to make regex parsing a bit friendlier. It will convert the results to
@@ -88,7 +88,7 @@ class UserAgent
     match
   end
   
-  def version= version
+  def set_version version
     @version = BrowserVersion.new version
   end
 end
