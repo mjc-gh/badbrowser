@@ -1,12 +1,13 @@
 require File.join(File.dirname(__FILE__), 'helper')
-#puts "#{agent} EXEPECTED #{version} GOT #{ua.version}"  if ua.version != version
+require 'ruby-debug' ; Debugger.start
+
 describe "AgentDetector" do
-  it "marks as failed with empty user agents" do
+  it "fails with empty user agents" do
     user_agent(nil).failed?.must_equal true
     user_agent('').failed?.must_equal true 
   end
   
-  it "fails on > 500 character agents" do
+  it "fails on more than 500 character" do
     user_agent('A' * 501).failed?.must_equal true
   end
   
@@ -27,6 +28,7 @@ describe "AgentDetector" do
 
               ua.failed?.must_equal true
               ua.version.must_be_nil
+              puts "#{ua.inspect}" if ua.send("#{browser}?") == nil
               ua.send("#{browser}?").wont_be_nil
             end
           end
@@ -34,9 +36,12 @@ describe "AgentDetector" do
           it "matches #{version}" do
             list.each do |agent|
               ua = user_agent agent
-
+              
               ua.failed?.must_equal false
-              ua.version.must_equal version
+              
+              ua.version.must_be :==, version
+              ua.version.must_be :===, version
+              
               ua.send("#{browser}?").wont_be_nil
             end
           end
