@@ -23,3 +23,7 @@ end
 def user_agent str
   UserAgent.new str
 end
+
+def browser_version str
+  BrowserVersion.new str
+end
