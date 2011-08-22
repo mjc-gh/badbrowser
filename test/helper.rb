@@ -11,7 +11,7 @@ require File.join path, 'lib/user_agent.rb'
 
 
 def fixture name
-  YAML.load( File.open(File.join('test', 'fixtures', '#{name}.yml'), 'r+').read )
+  YAML.load( File.open(File.join('test', 'fixtures', "#{name}.yml"), 'r+').read )
 end
 
 def user_agent_fixtures
