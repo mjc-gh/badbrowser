@@ -1,5 +1,4 @@
 require File.join(File.dirname(__FILE__), 'helper')
-require 'ruby-debug' ; Debugger.start
 
 describe "AgentDetector" do
   it "fails with empty user agents" do
@@ -28,7 +27,6 @@ describe "AgentDetector" do
 
               ua.failed?.must_equal true
               ua.version.must_be_nil
-              puts "#{ua.inspect}" if ua.send("#{browser}?") == nil
               ua.send("#{browser}?").wont_be_nil
             end
           end
@@ -38,23 +36,38 @@ describe "AgentDetector" do
               ua = user_agent agent
               
               ua.failed?.must_equal false
-              
               ua.version.must_be :==, version
-              ua.version.must_be :===, version
-              
               ua.send("#{browser}?").wont_be_nil
             end
           end
         end
-        
       end # each version
+      
+      it "correctly compares different versions" do
+        arr = versions.to_a
+        
+        arr.each.with_index do |set, index|
+          next_set = arr[index + 1]
+          next if next_set.nil? || next_set.first.empty?
+          
+          cur_list = set.last
+          next_list = next_set.last
+
+          ua1 = user_agent cur_list.first
+          ua2 = user_agent next_list.first
+
+          ua1.version.must_be :>, ua2.version
+          ua1.version.must_be :>=, ua2.version
+        end
+      end
+      
     end # describe block
     
     describe "#{browser.capitalize} performance" do
       agents = []
       versions.each { |v, list| agents += list }
       
-      bench_performance_linear 'matching' do |n|
+      bench_performance_linear 'on matching' do |n|
         n.times do
           user_agent agents[ rand(agents.size - 1) ]
         end
