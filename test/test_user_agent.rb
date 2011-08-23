@@ -9,6 +9,26 @@ describe "AgentDetector" do
   it "fails on more than 500 character" do
     user_agent('A' * 501).failed?.must_equal true
   end
+
+  # Can only include what is detected after the test target or else the wrong browser is matched 
+  # Don't test for Opera and Safari since Opera "jumps away" and Safari is last
+  it "matches only single browser" do
+    ff = user_agent('Firefox Chrome Safari')
+    msie = user_agent('MSIE Firefox Chrome')
+    chrome = user_agent('Chrome/ Safari')
+    
+    ff.chrome?.must_be_nil
+    ff.msie?.must_be_nil
+    ff.firefox?.must_equal true
+    
+    msie.chrome?.must_be_nil
+    msie.firefox?.must_be_nil
+    msie.msie?.must_equal true
+    
+    chrome.msie?.must_be_nil
+    chrome.firefox?.must_be_nil
+    chrome.chrome?.must_equal true    
+  end
   
   user_agent_fixtures.each do |fixture, versions|
     next unless versions
@@ -18,8 +38,6 @@ describe "AgentDetector" do
     
     describe "#{browser.capitalize}" do
       versions.each do |version, list|
-
-        # this isn't terribly DRY but it results better generated tests    
         if version.empty?
           it "matches browser with no versions" do
             list.each do |agent|
@@ -41,7 +59,7 @@ describe "AgentDetector" do
             end
           end
         end
-      end # each version
+      end
       
       it "correctly compares different versions" do
         arr = versions.to_a
@@ -60,8 +78,7 @@ describe "AgentDetector" do
           ua1.version.must_be :>=, ua2.version
         end
       end
-      
-    end # describe block
+    end
     
     describe "#{browser.capitalize} performance" do
       agents = []

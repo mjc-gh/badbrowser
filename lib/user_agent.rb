@@ -1,4 +1,3 @@
-# load support libs
 Dir[ "#{File.dirname(__FILE__)}/user_agent/*.rb" ].each { |file| require file }
 
 class UserAgent
@@ -36,16 +35,16 @@ class UserAgent
     match_for(:chrome, /Chrome\/([\d{1,3}\.]+)*/)             or
     parse_safari
   end
-  
+
   ##
   # We need a special method just for Opera since it's user agent strings are a nightmare (see fixtures).
   # Opera's user-agent include various tokens and strings that try to make it look like MSIE or Firefox
   # Always set the browser to @opera since we know it is opera at this point
   def parse_opera
     match = match_agent(/Version\/(\d{1,2}\.\d{1,2})/) || match_agent(/Opera[ \(\/]*(\d{1,2}\.\d{1,2}[u1]*)/)
-    
+
     @version = BrowserVersion.new match.last if match
-    @opera = true
+    @opera = true      
   end
   
   # version map for Safari 
@@ -64,7 +63,6 @@ class UserAgent
         # find may return nil so this is a two step process
         result = @@safari_map.find { |v, pair| match.last >= pair.first && match.last <= pair.last }
         @version = BrowserVersion.new result.first.to_s if result
-        
         @safari = true
         
       elsif @string.include?('Safari') || @string.include?('AppleWebKit')
@@ -75,13 +73,14 @@ class UserAgent
   end
   
   ##
-  # Tries to match the user agent for the supplied browser via some regex
-  # Regex are written so we at least can match the vendor
+  # Tries to match the user agent for the supplied browser via regex. The regex's are written so 
+  # we at least can match the vendor. It's key this method returns a "trueish" value if any 
+  # match is made (thus halting the OR chain in detect_user_agent)
   def match_for browser, regex
     match = match_agent regex
-
-    instance_variable_set "@#{browser}", true if match
+    
     @version = BrowserVersion.new match.to_a.last if match && match.size > 1
+    instance_variable_set "@#{browser}", true if match
   end
   
   ##
