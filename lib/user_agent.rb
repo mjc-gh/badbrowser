@@ -22,6 +22,11 @@ class UserAgent
   
   protected 
   
+  ##
+  # Main driver of user-agent detection. This method will run a bunch of RegExs to try and match
+  # the supplied string. It matches from most popular to least popular with the exception of 
+  # Opera. We have to check for opera first (via String#include?) and "jump" away since 
+  # Opera tries to disguise itself as MSIE and Firefox sometimes.
   def detect_user_agent
     # "jump away" for Opera using String#include? since it's quicker than regex at this point
     return parse_opera if @string.include?('Opera')
@@ -39,7 +44,7 @@ class UserAgent
   def parse_opera
     match = match_agent(/Version\/(\d{1,2}\.\d{1,2})/) || match_agent(/Opera[ \(\/]*(\d{1,2}\.\d{1,2}[u1]*)/)
     
-    set_version match.last if match
+    @version = BrowserVersion.new match.last if match
     @opera = true
   end
   
@@ -58,7 +63,7 @@ class UserAgent
       if match = match_agent(/AppleWebKit\/(\d{2,3}[\.\d{0,2}]*)/)
         # find may return nil so this is a two step process
         result = @@safari_map.find { |v, pair| match.last >= pair.first && match.last <= pair.last }
-        set_version result.first.to_s if result
+        @version = BrowserVersion.new result.first.to_s if result
         
         @safari = true
         
@@ -76,7 +81,7 @@ class UserAgent
     match = match_agent regex
 
     instance_variable_set "@#{browser}", true if match
-    set_version match.to_a.last if match && match.size > 1
+    @version = BrowserVersion.new match.to_a.last if match && match.size > 1
   end
   
   ##
@@ -90,11 +95,5 @@ class UserAgent
     match.reject! { |m| m.nil? || m.empty? }
     
     match
-  end
-  
-  ##
-  # Quick helper method to make setting the version a bit easier
-  def set_version version
-    @version = BrowserVersion.new version
   end
 end
