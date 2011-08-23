@@ -147,6 +147,12 @@
   - Mozilla/4.0 (compatible; MSIE 6.0b; Windows NT 5.1)
   - Mozilla/4.0 (compatible; MSIE 6.0b; Windows NT 5.0; .NET CLR 1.0.3705)
   - Mozilla/4.0 (compatible; MSIE 6.0b; Windows NT 4.0)
+'5.50':
+  - Mozilla/4.0 (compatible; MSIE 5.50; Windows NT; SiteKiosk 4.9; SiteCoach 1.0)
+  - Mozilla/4.0 (compatible; MSIE 5.50; Windows NT; SiteKiosk 4.8; SiteCoach 1.0)
+  - Mozilla/4.0 (compatible; MSIE 5.50; Windows NT; SiteKiosk 4.8)
+  - Mozilla/4.0 (compatible; MSIE 5.50; Windows 98; SiteKiosk 4.8)
+  - Mozilla/4.0 (compatible; MSIE 5.50; Windows 95; SiteKiosk 4.8)      
 '5.23':
   - Mozilla/4.0 (compatible; MSIE 5.23; Mac_PowerPC)
 '5.22':
