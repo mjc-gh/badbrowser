@@ -31,9 +31,9 @@ class UserAgent
     # "jump away" for Opera using String#include? since it's quicker than regex at this point
     return match_opera if @string.include?('Opera')
     
-    match_browser(:msie, /MSIE[ ]*(\d{1,2}\.[\dbB]{1,3})*/)       or 
-    match_browser(:firefox, /Firefox[ \(\/]*([a-z0-9\.\-\+]*)/i)  or
-    match_browser(:chrome, /Chrome\/([\d{1,3}\.]+)*/)             or
+    match_with(:msie, /MSIE[ ]*(\d{1,2}\.[\dbB]{1,3})*/)       or 
+    match_with(:firefox, /Firefox[ \(\/]*([a-z0-9\.\-\+]*)/i)  or
+    match_with(:chrome, /Chrome\/([\d{1,3}\.]+)*/)             or
     match_safari
   end
 
@@ -66,7 +66,7 @@ class UserAgent
   # as easily parsed as other browsers. If everything fails, we will at least look for 'Safari'
   # in the user-agent string to positively match the vendor.
   def match_safari
-    unless match_for(:safari, /Version\/([\d{1,3}\.[dp1]*]+) Safari/)
+    unless match_with(:safari, /Version\/([\d{1,3}\.[dp1]*]+) Safari/)
       if match = match_agent(/AppleWebKit\/(\d{2,3}[\.\d{0,2}]*)/)
         # find may return nil so this is a two step process
         result = @@safari_map.find { |v, pair| match.last >= pair.first && match.last <= pair.last }
