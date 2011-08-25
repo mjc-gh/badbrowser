@@ -45,6 +45,8 @@ describe "AgentDetector" do
 
               ua.failed?.must_equal true
               ua.version.must_be_nil
+              
+              ua.browser.must_equal browser.to_sym
               ua.send("#{browser}?").wont_be_nil
             end
           end
@@ -55,6 +57,8 @@ describe "AgentDetector" do
               
               ua.failed?.must_equal false
               ua.version.must_be :==, version
+              
+              ua.browser.must_equal browser.to_sym
               ua.send("#{browser}?").wont_be_nil
             end
           end
