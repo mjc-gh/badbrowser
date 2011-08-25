@@ -14,11 +14,11 @@ class UserAgent
   
   def failed?; !(defined? @version) end
   
-  def msie?; @browser.eql?(:msie); end
-  def firefox?; @browser.eql?(:firefox); end
-  def chrome?; @browser.eql?(:chrome); end
-  def safari?; @browser.eql?(:safari); end
-  def opera?; @browser.eql?(:opera); end
+  def msie?; @browser == :msie; end
+  def firefox?; @browser == :firefox; end
+  def chrome?; @browser == :chrome; end
+  def safari?; @browser == :safari; end
+  def opera?; @browser == :opera; end
   
   protected
   
@@ -29,19 +29,19 @@ class UserAgent
   # Opera tries to disguise itself as MSIE and Firefox sometimes.
   def detect_user_agent
     # "jump away" for Opera using String#include? since it's quicker than regex at this point
-    return parse_opera if @string.include?('Opera')
+    return match_opera if @string.include?('Opera')
     
-    match_for(:msie, /MSIE[ ]*(\d{1,2}\.[\dbB]{1,3})*/)       or 
-    match_for(:firefox, /Firefox[ \(\/]*([a-z0-9\.\-\+]*)/i)  or
-    match_for(:chrome, /Chrome\/([\d{1,3}\.]+)*/)             or
-    parse_safari
+    match_browser(:msie, /MSIE[ ]*(\d{1,2}\.[\dbB]{1,3})*/)       or 
+    match_browser(:firefox, /Firefox[ \(\/]*([a-z0-9\.\-\+]*)/i)  or
+    match_browser(:chrome, /Chrome\/([\d{1,3}\.]+)*/)             or
+    match_safari
   end
 
   ##
   # We need a special method just for Opera since it's user agent strings are a nightmare (see fixtures).
   # Opera's user-agent include various tokens and strings that try to make it look like MSIE or Firefox
   # Always set @opera as well since we know it is Opera at this point
-  def parse_opera
+  def match_opera
     match = match_agent(/Version\/(\d{1,2}\.\d{1,2})/) || match_agent(/Opera[ \(\/]*(\d{1,2}\.\d{1,2}[u1]*)/)
     @browser = :opera
     
@@ -54,7 +54,7 @@ class UserAgent
   end
   
   ## 
-  # version map for Safari 
+  # version map for Safari
   @@safari_map = {
     :'2.0.4' => ['418.8', '419'], :'2.0.3' => ['417.9', '418'], :'2.0.2' => ['416.11', '416.12'], :'2.0.1' => ['412.7', '412.7'], :'2.0' => ['412', '412.6.2'], 
     :'1.3.2' => ['312.8', '312.8.1'], :'1.3.1' => ['312.5', '312.5.2'], :'1.3' => ['312.1', '312.1.1'],  :'1.2.4' => ['125.5.5', '125.5.7'], 
@@ -65,7 +65,7 @@ class UserAgent
   # We need a special method just to handle Safari since it's user agent strings are not
   # as easily parsed as other browsers. If everything fails, we will at least look for 'Safari'
   # in the user-agent string to positively match the vendor.
-  def parse_safari
+  def match_safari
     unless match_for(:safari, /Version\/([\d{1,3}\.[dp1]*]+) Safari/)
       if match = match_agent(/AppleWebKit\/(\d{2,3}[\.\d{0,2}]*)/)
         # find may return nil so this is a two step process
@@ -79,11 +79,12 @@ class UserAgent
       end
     end
   end
-    
+  
+  ##
   # Tries to match the user agent for the supplied browser via regex. The regex's are written so 
   # we at least can match the vendor. It's key this method returns a "trueish" value if any 
   # match is made (thus halting the OR chain in detect_user_agent)
-  def match_for browser, regex
+  def match_browser browser, regex
     match = match_agent regex
     
     @version = BrowserVersion.new match.to_a.last if match && match.size > 1
