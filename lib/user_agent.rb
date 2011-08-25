@@ -1,25 +1,25 @@
 Dir[ "#{File.dirname(__FILE__)}/user_agent/*.rb" ].each { |file| require file }
 
 class UserAgent
-  attr_reader :version, :match, :string
+  attr_reader :browser, :version, :string
   
   def initialize str
     @string = str.to_s
     @string.strip!
+    @browser = nil
 
     detect_user_agent unless @string.empty? || @string.size > 500
-    @failed = @version.nil?
   end
   
-  def failed?; @failed; end
+  def failed?; !(defined? @version) end
   
-  def msie?; @msie; end
-  def firefox?; @firefox; end
-  def chrome?; @chrome; end
-  def safari?; @safari; end
-  def opera?; @opera; end
+  def msie?; @browser.eql?(:msie); end
+  def firefox?; @browser.eql?(:firefox); end
+  def chrome?; @browser.eql?(:chrome); end
+  def safari?; @browser.eql?(:safari); end
+  def opera?; @browser.eql?(:opera); end
   
-  protected 
+  protected
   
   ##
   # Main driver of user-agent detection. This method will run a bunch of RegExs to try and match
@@ -42,7 +42,7 @@ class UserAgent
   # Always set @opera as well since we know it is Opera at this point
   def parse_opera
     match = match_agent(/Version\/(\d{1,2}\.\d{1,2})/) || match_agent(/Opera[ \(\/]*(\d{1,2}\.\d{1,2}[u1]*)/)
-    @opera = true
+    @browser = :opera
     
     if match
       version = match.last.split('.')
@@ -70,10 +70,10 @@ class UserAgent
         # find may return nil so this is a two step process
         result = @@safari_map.find { |v, pair| match.last >= pair.first && match.last <= pair.last }
         @version = BrowserVersion.new result.first.to_s if result
-        @safari = true
+        @browser = :safari
         
       elsif @string.include?('Safari') || @string.include?('AppleWebKit')
-        @safari = true
+        @browser = :safari
         
       end
     end
@@ -86,7 +86,7 @@ class UserAgent
     match = match_agent regex
     
     @version = BrowserVersion.new match.to_a.last if match && match.size > 1
-    instance_variable_set "@#{browser}", true if match
+    @browser = browser if match
   end
     
   ##
