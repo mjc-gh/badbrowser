@@ -6,8 +6,9 @@ class UserAgent
   def initialize str
     @string = str.to_s
     @string.strip!
+    
     @browser = nil
-
+    
     detect_user_agent unless @string.empty? || @string.size > 500
   end
   
