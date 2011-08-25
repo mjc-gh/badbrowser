@@ -42,8 +42,8 @@ describe BrowserVersion do
       break if index == @sets.size - 1
       bv, nbv, nstr = set.first, *@sets[index + 1]
       
-      (bv <=> nbv).must_equal -1
-      (bv <=> nstr).must_equal -1
+      (bv <=> nbv).must_equal(-1)
+      (bv <=> nstr).must_equal(-1)
     end
     
     # could do this inabove loop but this is just cleaner

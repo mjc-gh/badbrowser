@@ -1,9 +1,8 @@
-gem 'minitest'
-require 'minitest/autorun'
-require 'minitest/benchmark'
-require 'purdytest'
-require 'yaml'
+require "bundler/setup"
+Bundler.require(:test)
 
+require 'minitest/benchmark'
+require 'yaml'
 
 path = File.expand_path('..', File.dirname(__FILE__))
 require File.join path, 'app'

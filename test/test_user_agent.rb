@@ -12,21 +12,21 @@ describe "AgentDetector" do
 
   # Can only include what is detected after the test target or else the wrong browser is matched 
   # Don't test for Opera and Safari since Opera "jumps away" and Safari is last
-  it "matches only single browser" do
+  it "only match a single browser" do
     ff = user_agent('Firefox Chrome Safari')
     msie = user_agent('MSIE Firefox Chrome')
     chrome = user_agent('Chrome/ Safari')
     
-    ff.chrome?.must_be_nil
-    ff.msie?.must_be_nil
+    ff.chrome?.must_equal false
+    ff.msie?.must_equal false
     ff.firefox?.must_equal true
     
-    msie.chrome?.must_be_nil
-    msie.firefox?.must_be_nil
+    msie.chrome?.must_equal false
+    msie.firefox?.must_equal false
     msie.msie?.must_equal true
     
-    chrome.msie?.must_be_nil
-    chrome.firefox?.must_be_nil
+    chrome.msie?.must_equal false
+    chrome.firefox?.must_equal false
     chrome.chrome?.must_equal true    
   end
   
