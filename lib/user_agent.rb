@@ -31,9 +31,9 @@ class UserAgent
     # "jump away" for Opera using String#include? since it's quicker than regex at this point
     return match_opera if @string.include?('Opera')
     
-    match_with(:msie, /MSIE[ ]*(\d{1,2}\.[\dbB]{1,3})*/)       or 
-    match_with(:firefox, /Firefox[ \(\/]*([a-z0-9\.\-\+]*)/i)  or
-    match_with(:chrome, /Chrome\/([\d{1,3}\.]+)*/)             or
+    match_with(:msie, /MSIE[ ]*(\d{1,2}\.[\dbB]{1,3})*/)      or 
+    match_with(:firefox, /Firefox[ \(\/]*([a-z0-9\.\-\+]*)/i) or
+    match_with(:chrome, /Chrome\/([\d\.]+)*/)            or
     match_safari
   end
 
@@ -57,7 +57,7 @@ class UserAgent
   # version map for Safari
   @@safari_map = {
     :'2.0.4' => ['418.8', '419'], :'2.0.3' => ['417.9', '418'], :'2.0.2' => ['416.11', '416.12'], :'2.0.1' => ['412.7', '412.7'], :'2.0' => ['412', '412.6.2'], 
-    :'1.3.2' => ['312.8', '312.8.1'], :'1.3.1' => ['312.5', '312.5.2'], :'1.3' => ['312.1', '312.1.1'],  :'1.2.4' => ['125.5.5', '125.5.7'], 
+    :'1.3.2' => ['312.8', '312.8.1'], :'1.3.1' => ['312.5', '312.5.2'], :'1.3' => ['312.1', '312.1.1'], :'1.2.4' => ['125.5.5', '125.5.7'], 
     :'1.2.3' => ['125.4', '125.5'], :'1.2.2' => ['125.2', '125.2'], :'1.2' => ['124', '124'],  :'1.0.3' => ['85.8.2', '85.8.5'], :'1.0' => ['85.7', '85.7'] 
   }
 
@@ -66,8 +66,8 @@ class UserAgent
   # as easily parsed as other browsers. If everything fails, we will at least look for 'Safari'
   # in the user-agent string to positively match the vendor.
   def match_safari
-    unless match_with(:safari, /Version\/([\d{1,3}\.[dp1]*]+) Safari/)
-      if match = match_agent(/AppleWebKit\/(\d{2,3}[\.\d{0,2}]*)/)
+    unless match_with(:safari, /Version\/([\d\.[dp1]*]+) Safari/)
+      if match = match_agent(/AppleWebKit\/(\d[\.\d]*)/)
         # find may return nil so this is a two step process
         result = @@safari_map.find { |v, pair| match.last >= pair.first && match.last <= pair.last }
         @version = BrowserVersion.new result.first.to_s if result
@@ -84,7 +84,7 @@ class UserAgent
   # Tries to match the user agent for the supplied browser via regex. The regex's are written so 
   # we at least can match the vendor. It's key this method returns a "trueish" value if any 
   # match is made (thus halting the OR chain in detect_user_agent)
-  def match_browser browser, regex
+  def match_with browser, regex
     match = match_agent regex
     
     @version = BrowserVersion.new match.to_a.last if match && match.size > 1
