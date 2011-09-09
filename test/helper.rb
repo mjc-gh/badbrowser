@@ -4,9 +4,8 @@ Bundler.require(:test)
 require 'minitest/benchmark'
 require 'yaml'
 
-path = File.expand_path('..', File.dirname(__FILE__))
-require File.join path, 'app'
-require File.join path, 'lib/user_agent.rb'
+$LOAD_PATH.unshift File.dirname(__FILE__) + '/../lib'
+require 'user_agent'
 
 
 def fixture name
