@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), 'helper')
+require 'helper'
 
 describe "AgentDetector" do
   it "fails with empty user agents" do
