@@ -1,8 +1,5 @@
 # BadBrowser API
 
-## INSTALL
-
-
 #### Install Ruby
 
 I would highly recommend RVM: http://beginrescueend.com/
