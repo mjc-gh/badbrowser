@@ -1,5 +1,7 @@
-INSTALL
--------
+# BadBrowser API
+
+## INSTALL
+
 
 #### Install Ruby
 
@@ -21,8 +23,7 @@ Then run the following and all the gems needed will be installed
 
     bundle install
 
-TESTING
--------
+## TESTING
 
 To run the test simply run the following: 
 
