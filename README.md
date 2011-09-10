@@ -1,6 +1,3 @@
-BadBrowser API
-==============
-
 INSTALL
 -------
 
