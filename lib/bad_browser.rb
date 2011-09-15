@@ -15,7 +15,7 @@ class BadBrowser < Sinatra::Base
 
   get "/detect.js" do
     content_type :js
-    render :erb, :'script.js'
+    render :erb, :'detect.js'
   end
   
   get "/" do # more for debug purposes
