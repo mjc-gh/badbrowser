@@ -18,7 +18,6 @@ class BrowserVersion
   # Most of the logic in this method is borrowed from Gem::Version#<=>
   def <=> other
     other_str = self.class === other ? other.string : other.to_s
-    
     return 0 if @string == other_str
     
     lhs_parsed, rhs_parsed = @parsed, parse(other_str)
@@ -28,7 +27,7 @@ class BrowserVersion
     while i <= limit do
       lhs, rhs = lhs_parsed[i] || 0, rhs_parsed[i] || 0
       i += 1
-      
+
       next if lhs == rhs
 
       return -1 if String  === lhs && Numeric === rhs

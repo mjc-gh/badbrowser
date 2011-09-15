@@ -1,12 +1,9 @@
-require "bundler/setup"
-Bundler.require(:test)
-
+gem 'minitest'
+require 'minitest/autorun'
 require 'minitest/benchmark'
 require 'yaml'
 
-$LOAD_PATH.unshift File.dirname(__FILE__) + '/../lib'
-require 'user_agent'
-
+require 'bad_browser'
 
 def fixture name
   YAML.load( File.open(File.join('test', 'fixtures', "#{name}.yml"), 'r+').read )

@@ -1,4 +1,4 @@
-Dir[ "#{File.dirname(__FILE__)}/user_agent/*.rb" ].each { |file| require file }
+require 'bad_browser/user_agent/browser_version'
 
 class UserAgent
   attr_reader :browser, :version, :string
