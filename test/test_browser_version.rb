@@ -2,7 +2,7 @@ require 'helper'
 
 describe BrowserVersion do
   before do
-    @sets = fixture(:browser_versions).collect.with_index do |str, index|
+    @sets = fixture(:browser_versions).map.with_index do |str, index|
       [ browser_version(str), str ]
     end
     

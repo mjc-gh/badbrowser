@@ -1,6 +1,6 @@
 require 'helper'
 
-describe "AgentDetector" do
+describe UserAgent do
   it "fails with empty user agents" do
     user_agent(nil).failed?.must_equal true
     user_agent('').failed?.must_equal true 
@@ -41,7 +41,7 @@ describe "AgentDetector" do
         if version.empty?
           it "matches browser with no versions" do
             list.each do |agent|
-              ua = user_agent agent
+              ua = user_agent(agent)
 
               ua.failed?.must_equal true
               ua.version.must_be_nil
@@ -53,7 +53,7 @@ describe "AgentDetector" do
         else        
           it "matches #{version}" do
             list.each do |agent|
-              ua = user_agent agent
+              ua = user_agent(agent)
               
               ua.failed?.must_equal false
               ua.version.must_be :==, version

@@ -1,7 +1,7 @@
-gem 'minitest'
-require 'minitest/autorun'
+require 'bundler'
+Bundler.require :default, :test
 require 'minitest/benchmark'
-require 'yaml'
+
 
 require 'bad_browser'
 
@@ -10,7 +10,7 @@ def fixture name
 end
 
 def user_agent_fixtures
-  Hash[Dir['test/fixtures/user_agents/*.yml'].collect! { |fname|
+  Hash[Dir['test/fixtures/user_agents/*.yml'].map! { |fname|
     [fname.match(/\w+\.yml/).to_s, YAML.load( File.open(fname, 'r+').read )]
   }]
 end
