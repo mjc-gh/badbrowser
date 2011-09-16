@@ -1,0 +1,11 @@
+- if redirect = params[:redirect] || params[:rd]
+  -# Redirect via Javascript
+  window.location = "#{redirect}";
+
+- elsif callback = params[:callback] || params[:cb]
+  -# JSONP callback
+  #{callback}({browser: '#{browser}', version: '#{version.string}'});
+
+- else
+  -# Default action; inline notification
+  alert("Bad Browser");
