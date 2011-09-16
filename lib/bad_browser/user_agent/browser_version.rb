@@ -9,14 +9,14 @@ class BrowserVersion
   ##
   # Will convert the version argument to a string
   # and proceed to parse it and save the results
-  def initialize version
+  def initialize(version)
     @string = version.to_s
     @parsed = parse @string
   end
   
   ##
   # Most of the logic in this method is borrowed from Gem::Version#<=>
-  def <=> other
+  def <=>(other)
     other_str = self.class === other ? other.string : other.to_s
     return 0 if @string == other_str
     
@@ -42,8 +42,8 @@ class BrowserVersion
   
   ##
   # Logic in this method borrowed from Gem::Version#segments
-  def parse version
-    version.scan(/[0-9]+|[A-z]+/).collect! do |str|
+  def parse(version)
+    version.scan(/[0-9]+|[A-z]+/).map! do |str|
       str =~ /^\d+$/ ? str.to_i : str
     end
   end

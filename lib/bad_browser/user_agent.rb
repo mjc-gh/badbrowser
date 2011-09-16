@@ -3,7 +3,7 @@ require 'bad_browser/user_agent/browser_version'
 class UserAgent
   attr_reader :browser, :version, :string
   
-  def initialize str
+  def initialize(str)
     @string = str.to_s
     @string.strip!
     
@@ -33,7 +33,7 @@ class UserAgent
     
     match_with(:msie, /MSIE[ ]*(\d{1,2}\.[\dbB]{1,3})*/)      or 
     match_with(:firefox, /Firefox[ \(\/]*([a-z0-9\.\-\+]*)/i) or
-    match_with(:chrome, /Chrome\/([\d\.]+)*/)            or
+    match_with(:chrome, /Chrome\/([\d\.]+)*/)                 or
     match_safari
   end
 
@@ -84,7 +84,7 @@ class UserAgent
   # Tries to match the user agent for the supplied browser via regex. The regex's are written so 
   # we at least can match the vendor. It's key this method returns a "trueish" value if any 
   # match is made (thus halting the OR chain in detect_user_agent)
-  def match_with browser, regex
+  def match_with(browser, regex)
     match = match_agent regex
     
     @version = BrowserVersion.new match.to_a.last if match && match.size > 1
@@ -94,7 +94,7 @@ class UserAgent
   ##
   # Helper to make regex parsing a bit friendlier. It will convert the results to
   # an array and remove any nil or empty elements (or return nil if not match, the default behaviour)
-  def match_agent regex
+  def match_agent(regex)
     match = @string.match regex
     return nil unless match
     
