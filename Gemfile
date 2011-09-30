@@ -2,7 +2,7 @@ source :rubygems
 
 gem 'sinatra'
 gem 'haml'
-gem 'uglifyjs'
+gem 'uglifier'
 
 # for testing stuff
 group :test do
