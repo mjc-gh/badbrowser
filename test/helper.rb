@@ -2,7 +2,6 @@ require 'bundler'
 Bundler.require :default, :test
 require 'minitest/benchmark'
 
-
 require 'bad_browser'
 
 def fixture name

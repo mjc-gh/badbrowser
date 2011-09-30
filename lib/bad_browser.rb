@@ -1,17 +1,47 @@
 require 'bad_browser/user_agent'
 
 class BadBrowser < Sinatra::Base
+  SHORT_NAMES = { :redirect => :rd, :callback => :cb, :link => :lk }
+  
   configure do
-    use Rack::Logger
+    dir = File.dirname(File.expand_path(__FILE__))
     
+    set :views, "#{dir}/views"
     set :logging, true
     set :static, false
   end
 
   helpers do
+    ##
+    # helpers for Javascript generation; parameters that are used more than
+    # once (like in an if statement) will usually have their own helper
+    def read_param(key)
+      return nil unless value = params[key] || params[SHORT_NAMES[key]]
+      value.strip!
+      
+      value.empty? ? nil : value
+    end
+    
+    def redirect; @redirect ||= read_param(:redirect); end
+    def callback; @callback ||= read_param(:callback); end
+    
+    ##
+    # Get human friendly name for browser
+    def browser_name
+      case @user_agent.browser
+      when :msie then 'Internet Explorer'
+      else @user_agent.browser.capitalize
+      end
+    end
+    
+    ##
+    # helpers for user_agent 
     def browser; @user_agent.browser; end
     def version; @user_agent.version; end
+    def string; @user_agent.string; end
     
+    ##
+    # simple case statement for browser to determine if the version is acceptable
     def compare_versions
       case @user_agent.browser
       when :msie then version >= '7.0'

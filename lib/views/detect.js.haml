@@ -1,11 +1,12 @@
-- if redirect = params[:redirect] || params[:rd]
+- if redirect
   -# Redirect via Javascript
   window.location = "#{redirect}";
 
-- elsif callback = params[:callback] || params[:cb]
+- elsif callback
   -# JSONP callback
-  #{callback}({browser: '#{browser}', version: '#{version.string}'});
+  #{callback}({"browser":"#{browser}","version":"#{version.string}","string":"#{string}"});
 
 - else
-  -# Default action; inline notification
-  alert("Bad Browser");
+  -# Default action; inline notification. This uses the following parameters:
+  -# - link
+  
