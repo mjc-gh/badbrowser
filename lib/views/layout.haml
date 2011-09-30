@@ -1,0 +1,26 @@
+!!!
+%html
+  %head
+    %title Bad Browser - User Agent Detection API
+    %link{:href => "favicon.ico", :rel => "shortcut icon"}/
+    %link{:href => "css/fontface/springsteel.css", :rel => "stylesheet", :type => "text/css"}/
+    %link{:href => "css/style.css", :rel => "stylesheet", :type => "text/css"}/
+    %script{:src => "http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js", :type => "text/javascript"}
+  %body
+    #page
+      #header
+        .wrap
+          %h1
+            %a{:href => url("/", false)} Bad Browser
+          %h2 User Agent Dectection API
+      
+      = yield
+      
+    #footer
+      .wrap
+        %span
+          Created and Developed By
+          = succeed "." do
+            %a{:href => "http://twitter.com/mikeycgto"} Michael Coyne 
+            and
+            %a{:href => "twitter.com/evan_teran"} Evan Teran
