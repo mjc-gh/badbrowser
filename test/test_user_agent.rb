@@ -9,7 +9,7 @@ describe UserAgent do
   it "fails on more than 500 character" do
     user_agent('A' * 501).failed?.must_equal true
   end
-
+  
   # Can only include what is detected after the test target or else the wrong browser is matched 
   # Don't test for Opera and Safari since Opera "jumps away" and Safari is last
   it "only match a single browser" do
@@ -28,6 +28,50 @@ describe UserAgent do
     chrome.msie?.must_equal false
     chrome.firefox?.must_equal false
     chrome.chrome?.must_equal true    
+  end
+  
+  describe "to json" do
+    it "with full match" do
+      str = 'Mozilla/5.0 (compatible; MSIE 6.0;)'
+      json = JSON.parse(user_agent(str).to_json)
+      
+      json['failed'].must_be_nil
+      json['browser'].must_equal 'msie'
+      json['version'].must_equal '6.0'
+      json['string'].must_equal str
+    end
+    
+    it "with no version" do
+      str = 'Mozilla/5.0 (compatible; MSIE)'
+      json = JSON.parse(user_agent(str).to_json)
+      
+      json['failed'].must_equal true
+      json['browser'].must_equal 'msie'
+      json['version'].must_equal nil
+      json['string'].must_equal str      
+    end
+    
+    it "with no match" do
+      str = 'Mozilla/5.0 (compatible;)'
+      json = JSON.parse(user_agent(str).to_json)
+      
+      json['failed'].must_equal true
+      json['browser'].must_equal nil
+      json['version'].must_equal nil
+      json['string'].must_equal str      
+    end
+    
+    it "with match and result" do
+      str = 'Mozilla/5.0 (compatible; MSIE 6.0;)'
+      json = JSON.parse(user_agent(str).to_json(true))
+      
+      json['result'].must_equal true
+      json['failed'].must_be_nil
+      
+      json['browser'].must_equal 'msie'
+      json['version'].must_equal '6.0'
+      json['string'].must_equal str
+    end    
   end
   
   user_agent_fixtures.each do |fixture, versions|
@@ -94,6 +138,5 @@ describe UserAgent do
         end
       end
     end
-    
   end # each fixture 
 end

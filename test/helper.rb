@@ -1,6 +1,9 @@
+require 'json'
 require 'bundler'
 Bundler.require :default, :test
+
 require 'minitest/benchmark'
+include Rack::Test::Methods
 
 require 'bad_browser'
 
@@ -20,4 +23,9 @@ end
 
 def browser_version str
   BrowserVersion.new str
+end
+
+
+def app
+  BadBrowser
 end
