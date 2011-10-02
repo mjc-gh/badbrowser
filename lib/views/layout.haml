@@ -11,9 +11,19 @@
       #header
         .wrap
           %h1
-            %a{:href => url("/", false)} Bad Browser
-          %h2 User Agent Dectection API
-      
+            %a{:href => url('/', false)} Bad Browser
+            
+          %ul
+            %li
+              %h2
+                %a{:href => url('/docs', false)} Docs
+            %li
+              %h2
+                %a{:href => url('/faq', false)} FAQ
+            %li
+              %h2
+                %a{:href => url('/news', false)} News
+      s
       = yield
       
     #footer
@@ -23,4 +33,4 @@
           = succeed "." do
             %a{:href => "http://twitter.com/mikeycgto"} Michael Coyne 
             and
-            %a{:href => "twitter.com/evan_teran"} Evan Teran
+            %a{:href => "http://twitter.com/evan_teran"} Evan Teran

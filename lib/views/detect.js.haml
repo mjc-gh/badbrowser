@@ -1,12 +1,12 @@
 - if redirect_to
   -# Redirect via Javascript
-  window.location = "#{redirect_to}";
-
+  window.location = '#{redirect_to}';
+  
 - elsif callback
   -# JSONP callback
-  #{callback}({"browser":"#{browser}","version":"#{version.string}","string":"#{string}"});
+  #{callback}(#{user_agent.to_json(result)})
 
 - else
   -# Default action; inline notification. This uses the following parameters:
   -# - link
-  
+  alert('bad browser!');

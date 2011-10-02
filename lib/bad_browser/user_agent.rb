@@ -20,6 +20,21 @@ class UserAgent
   def safari?; @browser == :safari; end
   def opera?; @browser == :opera; end
   
+  ##
+  # Convert object to a JSON representation for public consumption. Can easily use a JSON gem
+  # but it's just faster to build it by hand
+  def to_json(result = nil)
+    browser = @browser.nil? ? 'null' : %Q("#{@browser}")
+    
+    if failed?
+      %Q({"failed":true,"browser":#{browser},"version":null,"string":"#{@string}"})
+    elsif !result.nil?
+      %Q({"result":#{result},"browser":#{browser},"version":"#{@version.string}","string":"#{@string}"})
+    else
+      %Q({"browser":#{browser},"version":"#{@version.string}","string":"#{@string}"})
+    end
+  end
+  
   protected
   
   ##
