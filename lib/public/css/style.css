@@ -35,11 +35,38 @@ h6 { font-size:14px; line-height:22px; }
 .desc { width:420px; float:left; }
 .form { width:500px; float:right; }
 
-.form div { 
-  background:#FFF; padding:10px; line-height:0; background: #FFF; height:140px; margin:0 0 25px;
+.form > div { 
+  background:#FFF; padding:10px; line-height:0; background: #FFF; height:140px; width:475px; margin:0 0 25px;
   border:1px solid #9EB7BC; border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px; 
   box-shadow:inset #CCC 0 1px 2px; -moz-box-shadow:inset #CCC 0 1px 2px; -webkit-box-shadow:inset #CCC 0 1px 2px;  
 }
+
+.form .options { width:455px; margin:0 10px 10px;  }
+.form .lower { display:none; width:455px; margin:0 10px;  }
+
+.form textarea { height:80px; width:455px; margin:5px 10px; resize: none; border:1px solid #9EB7BC; }
+.form input[type="text"] { border:1px solid #9EB7BC; }
+
+.docs { overflow:hidden; }
+.docs h1 { width:500px; }
+.docs ul { list-style:circle; }
+.docs > p { height:100px; margin:85px 0 0; font-size:18px; text-align:center; }
+
+.docs > ul, .faq > ul { margin:0 20px; }
+.docs > ul > li, .faq > ul > li { margin:25px 0 0; }
+
+.docs > ul > li > ul { margin:0 15px; }
+.docs > ul > li > ul > li { margin:35px; }
+
+.api-toc {
+  float:right; background:#FFF; padding:10px; line-height:0; background: #FFF; height:240px; width:175px; margin:0 0 25px;
+  border:1px solid #9EB7BC; border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px; 
+  box-shadow:inset #CCC 0 1px 2px; -moz-box-shadow:inset #CCC 0 1px 2px; -webkit-box-shadow:inset #CCC 0 1px 2px;  
+}
+.api-toc li { line-height:16px; margin:10px 0; }
+.api-toc > ul { margin:0 0 0 20px; font-size:16px; }
+.api-toc li > ul { margin:0 0 20px 30px; font-size:14px; }
+.api-toc p { margin:90px 0 0; font-size:12px; text-align:right; }
 
 #middle { background:url('/img/middle.jpg') repeat-x 0 0; height:51px; margin:40px 0; padding:15px 0; }
 #middle div { width:800px; }
@@ -58,7 +85,7 @@ h6 { font-size:14px; line-height:22px; }
 
 .button {
   display:inline-block; height:50px; padding-right:40px; color:#eee; font-size:18px; font-weight:bold; text-decoration:none; 
-  text-shadow:0 1px 1px #063640; line-height:44px; background:url('/img/button-right.png') no-repeat top right;
+  text-shadow:0 1px 1px #063640; line-height:44px; background:url('/img/button-right.png') no-repeat top right; cursor:pointer;
 }
 
 .button span { display:inline-block; height:50px; padding:0 12px 0 20px; background:url('/img/button-left.png') repeat-x top left; }

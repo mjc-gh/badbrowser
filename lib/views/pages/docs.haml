@@ -1,0 +1,60 @@
+.wrap.container.docs
+  %h1 Docs
+  
+  %div.api-toc
+    %h3 The API
+    %ul
+      %li
+        %a{ :href => "#default" } Default
+        
+        %ul
+          %li
+            %a{ :href => "#link" } Link
+      
+      %li
+        %a{ :href => "#callback" } Callback
+      %li
+        %a{ :href => "#Redirect" } Redirect
+        
+    
+    %p ...more coming soon!
+    
+    
+  %ul
+    %li
+      %a{:name => 'default'}
+      %h2 Default
+      
+      %p 
+        By default, our API will generate some Javascript to show a notification at the top of the page. 
+        The appearance is designed to be informative without being obtrusive. 
+      
+      %ul
+        %li
+          %a{:name => 'link'}
+          %h3 Link
+          
+          %p 
+            This link parameters lets you define the "more information" href attribute of the anchor element included within 
+            the default notifcation. This can be relative path or full URI. It must be escaped.
+        
+      
+    %li
+      %a{:name => 'callback'}
+      %h2 Callback
+      
+      %p 
+        This parameter exposes a basic JSON with Padding (JSONP) API. The callback must be function accessible from the global scope. 
+        Alternatively, developers can use the JSONP features available in jQuery and other libraries which allow for easier management of JSONP requests.
+      
+    %li
+      %a{:name => 'redirect'}
+      %h2 Redirect
+      
+      %p 
+        Will cause a redirect in the event of a bad browser being detected. This can be relative path or full URI. It must be escaped.
+      
+  %p 
+    Any suggestions for the API are more than welcomed!
+    %br
+    Feel free to Tweet at us!
