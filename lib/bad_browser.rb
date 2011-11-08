@@ -7,7 +7,7 @@ class BadBrowser < Sinatra::Base
     dir = File.dirname(File.expand_path(__FILE__))
     
     set :views, "#{dir}/views"
-    set :public, "#{dir}/public"
+    set :public_folder, "#{dir}/public"
     set :static, true
   end
 
