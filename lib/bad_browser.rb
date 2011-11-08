@@ -69,6 +69,9 @@ class BadBrowser < Sinatra::Base
   ##
   # We put this in a before to ensure its run first. Likewise, we may add more routes in the future
   before '/detect.js' do
+    use Rack::Auth::Basic, "Restricted Area" do |username, password|
+      [username, password] == ['bad', 'browser']
+    end
     @user_agent ||= UserAgent.new(request.user_agent)
   end
   
