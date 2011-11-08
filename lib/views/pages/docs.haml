@@ -46,6 +46,12 @@
       %p 
         This parameter exposes a basic JSON with Padding (JSONP) API. The callback must be function accessible from the global scope. 
         Alternatively, developers can use the JSONP features available in jQuery and other libraries which allow for easier management of JSONP requests.
+      %p
+        Unlike the default and redirect options, the callback option will always respond with some content. Specifically, the callback function will be called
+        with an object containing a 'result', 'browser', 'version' and 'string' property. The 'result' property will be a boolean value where false indicates an
+        outdated or "bad" browser.
+      %p
+        For preview of this option, <a target="_blank" href="/detect.js?callback=%3F">click here</a>.
       
     %li
       %a{:name => 'redirect'}
