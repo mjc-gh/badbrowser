@@ -1,5 +1,9 @@
 # chrome doesnt have a lot of distinct user agents per-version
 # but sure has a lot of different versions
+16.0.897.0:
+  - Mozilla/5.0 (Windows NT 5.1) AppleWebKit/535.6 (KHTML, like Gecko) Chrome/16.0.897.0 Safari/535.6
+15.0.874.54:
+  - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.54 Safari/535.2
 15.0.872.0:
   - Mozilla/5.0 (Windows NT 5.1) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.872.0 Safari/535.2
 15.0.871.0:
