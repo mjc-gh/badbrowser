@@ -1,0 +1,31 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    execjs (1.2.9)
+      multi_json (~> 1.0)
+    haml (3.1.3)
+    minitest (2.7.0)
+    multi_json (1.0.3)
+    rack (1.3.5)
+    rack-protection (1.1.4)
+      rack
+    rack-test (0.6.1)
+      rack (>= 1.0)
+    sinatra (1.3.1)
+      rack (~> 1.3, >= 1.3.4)
+      rack-protection (~> 1.1, >= 1.1.2)
+      tilt (~> 1.3, >= 1.3.3)
+    tilt (1.3.3)
+    uglifier (1.0.4)
+      execjs (>= 0.3.0)
+      multi_json (>= 1.0.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  haml
+  minitest
+  rack-test
+  sinatra
+  uglifier
