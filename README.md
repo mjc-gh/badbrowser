@@ -1,6 +1,8 @@
 # BadBrowser API
 
-Welcome to the BadBrowser Core API
+Welcome to the BadBrowser Core API. 
+
+Hosted on Heroku: http://badbrowser.herokuapp.com
 
 ## INSTALL
 
