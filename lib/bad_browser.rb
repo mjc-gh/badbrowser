@@ -33,7 +33,7 @@ class BadBrowser < Sinatra::Base
     
     def redirect_to; @redirect_to ||= read_param(:redirect); end
     def callback; @callback ||= read_param(:callback); end
-
+    
     ##
     # helpers for user_agent 
     def user_agent; @user_agent; end
@@ -79,7 +79,7 @@ class BadBrowser < Sinatra::Base
     log_request result
     
     content_type :js
-    callback || !result ? render(:haml, :'detect.js', :layout => false, :locals => { :result => result }) : ''
+    callback || !result || params[:_forced] ? render(:haml, :'detect.js', :layout => false, :locals => { :result => result }) : ''
   end
 
 
@@ -89,5 +89,6 @@ class BadBrowser < Sinatra::Base
   get '/docs' do; haml :'pages/docs'; end
   get '/faq' do; haml :'pages/faq'; end
   get '/news' do; haml :'pages/news'; end
+  get '/demo' do; haml :'pages/demo'; end
 
 end
