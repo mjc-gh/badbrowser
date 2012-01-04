@@ -24,6 +24,16 @@ Then run the following and all the gems needed will be installed
 
     bundle install
 
+## DEVELOPING
+
+It is recommend you use "shotgun" to locally run the application. To install shotgun, run:
+
+    gem install shotgun
+	
+To start the application, run: 
+
+    shotgun config.ru
+
 ## TESTING
 
 To run the test simply run the following: 
