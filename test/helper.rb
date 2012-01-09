@@ -7,7 +7,7 @@ include Rack::Test::Methods
 
 require 'bad_browser'
 
-def fixture name
+def fixture(name)
   YAML.load( File.open(File.join('test', 'fixtures', "#{name}.yml"), 'r+').read )
 end
 
@@ -17,11 +17,11 @@ def user_agent_fixtures
   }]
 end
 
-def user_agent str
+def user_agent(str)
   UserAgent.new str
 end
 
-def browser_version str
+def browser_version(str)
   BrowserVersion.new str
 end
 

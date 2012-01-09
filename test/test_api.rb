@@ -155,4 +155,81 @@ describe "API" do
       body['version'].must_equal '6.0'
     end
   end
+  
+  describe "information page" do
+    it "renders on no param" do
+      get '/'
+      assert last_response.ok?
+    end
+    
+    it "renders with just for param" do
+      get '/', :for => ''
+      assert last_response.ok?
+    end
+    
+    it "renders with just version param" do
+      get '/', :version => ''
+      assert last_response.ok?
+    end    
+    
+    it "redirects on empty for param" do
+      get '/', :for => '', :version => '1.0.0'
+      assert last_response.redirect?
+    end
+    
+    it "redirects on bad for param" do
+      get '/', :for => 'blah', :version => '1.0.0'
+      assert last_response.redirect?
+    end
+
+    it "redirects on empty version param" do
+      get '/', :for => 'msie', :version => ''
+      assert last_response.redirect?
+    end
+    
+    it "works for msie" do
+      get '/', :for => :msie, :version => '6.0'
+      
+      assert last_response.ok?
+       
+      last_response.body.must_include 'Internet Explorer'
+      last_response.body.must_include 'http://www.microsoft.com'
+    end
+    
+    it "works for firefox" do
+      get '/', :for => :firefox, :version => '3.5'
+      
+      assert last_response.ok?
+       
+      last_response.body.must_include 'Firefox'
+      last_response.body.must_include 'http://www.mozilla.org/'
+    end
+    
+    it "works for chrome" do
+      get '/', :for => :chrome, :version => '4.0'
+      
+      assert last_response.ok?
+       
+      last_response.body.must_include 'Chrome'
+      last_response.body.must_include 'http://www.google.com/'
+    end
+    
+    it "works for safari" do
+      get '/', :for => :safari, :version => '3.0'
+      
+      assert last_response.ok?
+       
+      last_response.body.must_include 'Safari'
+      last_response.body.must_include 'http://www.apple.com/'
+    end
+    
+    it "works for opera" do
+      get '/', :for => :opera, :version => '9.50'
+      
+      assert last_response.ok?
+       
+      last_response.body.must_include 'Opera'
+      last_response.body.must_include 'http://www.opera.com/'
+    end    
+  end
 end
