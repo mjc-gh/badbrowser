@@ -4,11 +4,15 @@ class BadBrowser < Sinatra::Base
   SHORT_NAMES = { :redirect => :rd, :callback => :cb, :link => :lk }
   
   configure do
+    Tilt.register 'js', Tilt::ERBTemplate
+    
     dir = File.dirname(File.expand_path(__FILE__))
     
     set :views, "#{dir}/views"
     set :public_folder, "#{dir}/public"
     set :static, true
+    
+    set :base_url, ENV['RACK_ENV'] == 'production' ? 'http://badbrowser.info/' : 'http://localhost:4567/'
   end
 
   helpers do
@@ -33,6 +37,7 @@ class BadBrowser < Sinatra::Base
     
     def redirect_to; @redirect_to ||= read_param(:redirect); end
     def callback; @callback ||= read_param(:callback); end
+    def default_info_link; settings.base_url; end
     
     ##
     # helpers for user_agent 
