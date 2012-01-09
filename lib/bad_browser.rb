@@ -12,7 +12,7 @@ class BadBrowser < Sinatra::Base
     set :public_folder, "#{dir}/public"
     set :static, true
     
-    set :base_url, ENV['RACK_ENV'] == 'production' ? 'http://badbrowser.info/' : 'http://localhost:4567/'
+    set :base_url, ENV['RACK_ENV'] == 'production' ? 'http://badbrowser.info' : 'http://localhost:4567'
   end
 
   helpers do
@@ -37,21 +37,35 @@ class BadBrowser < Sinatra::Base
     
     def redirect_to; @redirect_to ||= read_param(:redirect); end
     def callback; @callback ||= read_param(:callback); end
-    def default_info_link; settings.base_url; end
+    def default_info_link; "#{settings.base_url}/"; end
     
     ##
     # helpers for user_agent 
-    def user_agent; @user_agent; end
+    def user_agent; @user_agent; end    
     def browser; user_agent.browser; end
     def version; user_agent.version; end
     def string; user_agent.string; end
-
+    
     ##
     # Get human friendly name for browser
     def browser_name
-      case browser
+      symbol = user_agent ? browser : params[:for].to_sym
+
+      case symbol
       when :msie then 'Internet Explorer'
-      else browser.capitalize
+      else symbol.capitalize
+      end
+    end
+    
+    ##
+    # Get update URL for respective browser
+    def update_url
+      case params[:for].to_sym
+      when :msie then "http://www.microsoft.com/ie"
+      when :firefox then "http://www.mozilla.org/firefox"
+      when :chrome then "http://www.google.com/chrome"
+      when :safari then "http://www.apple.com/safari"
+      when :opera then "http://www.opera.com/"
       end
     end
     
@@ -90,10 +104,22 @@ class BadBrowser < Sinatra::Base
 
   ##
   # Static Routes
-  get '/' do; haml :'pages/home'; end
+  get '/' do
+    if params[:for].nil? || params[:version].nil?
+      haml :'pages/home'
+    else
+      if !params[:version].empty? && UserAgent::BROWSERS.include?(params[:for])
+        haml :'pages/info'
+      else
+        redirect '/'
+      end
+    end
+  end
+
   get '/docs' do; haml :'pages/docs'; end
   get '/faq' do; haml :'pages/faq'; end
   get '/news' do; haml :'pages/news'; end
   get '/demo' do; haml :'pages/demo'; end
+  get '/info' do; haml :'pages/info'; end
 
 end

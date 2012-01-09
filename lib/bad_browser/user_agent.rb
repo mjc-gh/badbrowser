@@ -1,6 +1,8 @@
 require 'bad_browser/user_agent/browser_version'
 
 class UserAgent
+  BROWSERS = %w[msie firefox chrome safari opera]
+  
   attr_reader :browser, :version, :string
   
   def initialize(str)
@@ -8,7 +10,7 @@ class UserAgent
     @string.strip!
     
     @browser = nil
-    
+        
     detect_user_agent unless @string.empty? || @string.size > 500
   end
   
