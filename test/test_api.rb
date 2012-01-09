@@ -230,6 +230,23 @@ describe "API" do
        
       last_response.body.must_include 'Opera'
       last_response.body.must_include 'http://www.opera.com/'
+    end
+    
+    it "without referrer" do
+      get '/', :for => :msie, :version => '6.0'
+      
+      assert last_response.ok?
+      
+      last_response.body.must_include 'window.history.back()'
+    end
+    
+    it "with referrer" do
+      header 'Referer', 'http://www.testreferer.com'
+      get '/', :for => :msie, :version => '6.0'
+      
+      assert last_response.ok?
+      
+      last_response.body.must_include 'http://www.testreferer.com'
     end    
   end
 end
