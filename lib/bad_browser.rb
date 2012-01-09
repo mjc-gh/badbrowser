@@ -52,7 +52,10 @@ class BadBrowser < Sinatra::Base
       symbol = user_agent ? browser : params[:for].to_sym
 
       case symbol
-      when :msie then 'Internet Explorer'
+      when :msie then 'Microsoft Internet Explorer'
+      when :firefox then 'Mozilla Firefox'
+      when :chrome then 'Google Chrome'
+      when :safari then 'Apple Safari'      
       else symbol.capitalize
       end
     end
