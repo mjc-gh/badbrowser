@@ -27,7 +27,9 @@
       
       %p 
         By default, our API will generate some Javascript to show a notification at the top of the page. 
-        The appearance is designed to be informative without being obtrusive. 
+        The appearance is designed to be informative without being obtrusive. You can preview a demo of this notification 
+        <a href="/demo">here</a>.
+        
       
       %ul
         %li
@@ -35,8 +37,23 @@
           %h3 Link
           
           %p 
-            This link parameters lets you define the "more information" href attribute of the anchor element included within 
-            the default notifcation. This can be relative path or full URI. It must be escaped.
+            This link parameters lets you define the "click here" href attribute of the anchor element included within 
+            the default notifcation. This can be relative path or full URI. It must be escaped. 
+          %p
+            The generated URL will include a 
+            %code for
+            query parameter that indicates the type of browser being used. When using a custom URL, it is recommend that you use this 
+            parameter to provide the user with an update URL for that specific browser. Here is a values for this parameter are:
+            %code "msie"
+            = ','
+            %code "firefox"
+            = ','
+            %code "chrome"
+            = ','
+            %code "safari"
+            and
+            %code "opera"
+            = '.'
         
       
     %li
