@@ -3,12 +3,12 @@
 body { color:#08414D; font-family:'Trebuchet MS', Verdana, sans-serif; font-size:14px;line-height:21px; background:url('/img/bg.jpg') repeat 0 0; }
 body, html { height:100%; }
 
-a { color:#006699; text-decoration:none; }
+a { color:#006699; text-decoration:none; cursor:pointer; }
 a:active { color:#999900; }
 
 ul { list-style:none; }
 p, h1, h2, h3, h4, h5, h6 { margin-bottom:12px; }
-h1, h2, h3, h4, h5, h6 { font-family:'SpringsteelLight', 'Trebuchet MS', sans-serif; }
+h1, h2, h3, h4, h5, h6, #header li a { font-family:'SpringsteelLight', 'Trebuchet MS', sans-serif; }
 h1 { font-size:36px; line-height:45px; }
 h2 { font-size:24px; line-height:33px; }
 h3 { font-size:21px; line-height:30px; }
@@ -20,16 +20,18 @@ h6 { font-size:14px; line-height:22px; }
 .left { float:left; }
 .right { float:right; }
 .wrap { width:960px; margin:0 auto; }
+.spaced { margin-top:75px; }
 
 #page { min-height: 100%;	height: auto !important; height: 100%; margin:0 0 -50px; }
 
 #header { background:url('/img/header.png') repeat-x 0 0; height:80px; margin:0 0 60px; overflow:hidden; }
 #header a { color:#C2CACC; }
 #header h1 { float:left; }
-#header h1, #header h2 { line-height:70px; text-shadow:0 1px 1px #000; }
+#header h1, #header li { line-height:70px; text-shadow:0 1px 1px #000; }
 
-#header ul { float:right; width:360px; }
+#header ul { float:right; width:440px; }
 #header li { float:left; margin:0 30px;}
+#header li a { font-size:24px;  }
 
 
 .desc { width:420px; float:left; }
