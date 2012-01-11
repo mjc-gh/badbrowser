@@ -28,12 +28,12 @@ class UserAgent
   def to_json(result = nil)
     browser = @browser.nil? ? 'null' : %Q("#{@browser}")
     
-    if failed?
+    if failed? || result.nil?
       %Q({"failed":true,"browser":#{browser},"version":null,"string":"#{@string}"})
-    elsif !result.nil?
-      %Q({"result":#{result},"browser":#{browser},"version":"#{@version.string}","string":"#{@string}"})
     else
-      %Q({"browser":#{browser},"version":"#{@version.string}","string":"#{@string}"})
+      %Q({"result":#{result},"browser":#{browser},"version":"#{@version.string}","string":"#{@string}"})
+    # else
+    #   %Q({"fail":true,"browser":#{browser},"version":"#{@version.string}","string":"#{@string}"})
     end
   end
   
