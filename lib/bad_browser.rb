@@ -14,7 +14,7 @@ class BadBrowser < Sinatra::Base
     set :public_folder, "#{dir}/public"
     set :static, true
     
-    set :base_url, ENV['RACK_ENV'] == 'production' ? 'http://badbrowser.info' : 'http://localhost:4567'
+    set :base_url, ENV['RACK_ENV'] == 'production' ? 'http://badbrowser.info' : 'http://localhost:9393'
   end
 
   helpers do
@@ -51,13 +51,13 @@ class BadBrowser < Sinatra::Base
     ##
     # Get human friendly name for browser
     def browser_name
-      return 'Unknown' if user_agent && user_agent.failed? && !params[:for]      
+      return 'Unknown' if params[:for] == 'u' || user_agent && user_agent.failed? #&& !params[:for]
       
       case user_agent ? browser : params[:for].to_sym
       when :msie then 'Microsoft Internet Explorer'
       when :firefox then 'Mozilla Firefox'
       when :chrome then 'Google Chrome'
-      when :safari then 'Apple Safari'      
+      when :safari then 'Apple Safari'
       when :opera then 'Opera'        
       end
     end
@@ -113,7 +113,7 @@ class BadBrowser < Sinatra::Base
     if params[:for].nil? || params[:version].nil?
       haml :'pages/home'
     else
-      if !params[:version].empty? && UserAgent::BROWSERS.include?(params[:for])
+      if !params[:version].empty? && UserAgent::BROWSERS.include?(params[:for]) || params[:for] == 'u'
         haml :'pages/info'
       else
         redirect '/'

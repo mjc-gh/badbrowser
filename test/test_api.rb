@@ -319,6 +319,14 @@ describe "API" do
       assert last_response.ok?
       
       last_response.body.must_include 'http://www.testreferer.com'
+    end
+    
+    it "works for unknown" do
+      get '/', :for => :u, :version => '0'
+      
+      assert last_response.ok?
+      
+      last_response.body.wont_be_empty
     end    
   end
 end

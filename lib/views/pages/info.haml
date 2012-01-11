@@ -1,21 +1,33 @@
-.wrap.container.info
-  %h1 Bad Browser Detected!
-  
-  %p 
-    You are using an out-of-date version of <strong>#{browser_name}</strong>. Your current version is <strong>#{html_escape(params[:version])}</strong>. 
-  %p
-    It is <em>highly</em> encouraged that you update your browser to most recent stable version. Using an out-of-date version may hinder the performance
-    and rendering of websites using newer browser features. You are also more susceptible to software vulnerabilities and security issues. 
-  
-  %h3.spaced How to Update
-  
-  %p
-    %a{:href => update_url} Click here
-    for more information on how to update to the latest version of #{browser_name}. 
+-if params[:for] == 'u'
+  .wrap.container.info
+    %h1 Unknown Browser 
     
-  %h3 Go Back
+    %p
+      We were unable to detect the browser you are using. Note that the notification was shown on our demo page because
+      it uses the <code>_forced</code> parameter. Normally, when the browser is not detected and empty response is generated. See
+      our 
+      %a{:src => 'docs' } documentation
+      for more details.
+    
+- else
+  .wrap.container.info
+    %h1 Bad Browser Detected!
+    
+    %p   
+      You are using an out-of-date version of <strong>#{browser_name}</strong>. Your current version is <strong>#{html_escape(params[:version])}</strong>. 
+    %p
+      It is <em>highly</em> encouraged that you update your browser to most recent stable version. Using an out-of-date version may hinder the performance
+      and rendering of websites using newer browser features. You are also more susceptible to software vulnerabilities and security issues. 
   
-  %p 
-    If you do not want to update your browser at this time, please 
-    %a{:href => request.referrer || 'window.history.back()'} click here
-    to return the page you were previously on.
+    %h3.spaced How to Update
+  
+    %p
+      %a{:href => update_url} Click here
+      for more information on how to update to the latest version of #{browser_name}. 
+    
+    %h3 Go Back
+  
+    %p 
+      If you do not want to update your browser at this time, please 
+      %a{:href => request.referrer || 'window.history.back()'} click here
+      to return the page you were previously on.
