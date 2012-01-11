@@ -29,7 +29,8 @@
         By default, our API will generate some Javascript to show a notification at the top of the page. 
         The appearance is designed to be informative without being obtrusive. You can preview the notification on our
         %a{:href => '/demo'} demo
-        page.
+        page. Note that, in our demo, we are using the <code>_forced</code> parameter to always render a response. Normally, only when a 
+        "bad" browser is detected does the response include the an actual redirect.
         
       
       %ul
@@ -45,16 +46,7 @@
             %code for
             query parameter that indicates the type of browser being used. When using a custom URL, it is recommend that you use this 
             parameter to provide the user with an update URL for that specific browser. Here is a values for this parameter are:
-            %code "msie"
-            = ','
-            %code "firefox"
-            = ','
-            %code "chrome"
-            = ','
-            %code "safari"
-            and
-            %code "opera"
-            = '.'
+            <code>"msie"</code>, <code>"firefox"</code>, <code>"chrome"</code>, <code>"safari"</code> and <code>"opera"</code>.
         
       
     %li
@@ -66,8 +58,17 @@
         Alternatively, developers can use the JSONP features available in jQuery and other libraries which allow for easier management of JSONP requests.
       %p
         Unlike the default and redirect options, the callback option will always respond with some content. Specifically, the callback function will be called
-        with an object containing a 'result', 'browser', 'version' and 'string' property. The 'result' property will be a boolean value where false indicates an
-        outdated or "bad" browser.
+        with an object that always contains a <code>browser</code>, <code>version</code> and <code>string</code> property. The <code>browser</code> and 
+        <code>version</code> fields will be set to what we've detected from the user's request. The <code>string</code> property is always set to the 
+        raw user-agent string and is always present. This may be an empty string however, if the request did not include a user-agent.
+      %p
+        Additionally, there may will be either a <code>result</code> property or a <code>failed</code> property included within the JSON response. 
+        If <code>failed</code> is present (and <code>true</code>), it will indicate that we were unable to indentify which browser and version the user is using. 
+        If the request <code>failed</code>, we still may have been able to detect the browser vendor.
+      %p        
+        Finally, The <code>result</code> property will be a boolean value where <code>false</code> indicates an outdated or "bad" browser. This field will only be
+        present if the request did not fail and we were able to correctly indentify the browser vendor and version.
+        
       %p
         For a preview of this option, <a target="_blank" href="/detect.js?callback=%3F">click here</a>.
       
@@ -76,7 +77,11 @@
       %h2 Redirect
       
       %p 
-        Will cause a redirect in the event of a bad browser being detected. This can be relative path or full URI. It must be escaped.
+        Will cause a redirect in the event of a bad browser being detected. This can be relative path or full URI. It must be escaped. The callback itself is achieved
+        using a JavaScript redirect. 
+        %a{:href => '/detect.js?redirect=%2Fsome%2Furl%2Fhere&_forced=1', :target => '_blank'} Click here
+        to preview this type of response. Note that, in this preview, we are using the <code>_forced</code> parameter to always render a response. Normally, only when a 
+        "bad" browser is detected does the response include the an actual redirect.
       
   %p 
     Any suggestions for the API are more than welcomed!
