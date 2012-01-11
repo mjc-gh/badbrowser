@@ -9,6 +9,8 @@ class BadBrowser < Sinatra::Base
     dir = File.dirname(File.expand_path(__FILE__))
     
     set :views, "#{dir}/views"
+    set :haml, :format => :html5
+    
     set :public_folder, "#{dir}/public"
     set :static, true
     
@@ -49,14 +51,14 @@ class BadBrowser < Sinatra::Base
     ##
     # Get human friendly name for browser
     def browser_name
-      symbol = user_agent ? browser : params[:for].to_sym
-
-      case symbol
+      return 'Unknown' if user_agent && user_agent.failed? && !params[:for]      
+      
+      case user_agent ? browser : params[:for].to_sym
       when :msie then 'Microsoft Internet Explorer'
       when :firefox then 'Mozilla Firefox'
       when :chrome then 'Google Chrome'
       when :safari then 'Apple Safari'      
-      else symbol.capitalize
+      when :opera then 'Opera'        
       end
     end
     

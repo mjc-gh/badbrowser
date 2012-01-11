@@ -26,14 +26,15 @@ class UserAgent
   # Convert object to a JSON representation for public consumption. Can easily use a JSON gem
   # but it's just faster to build it by hand
   def to_json(result = nil)
-    browser = @browser.nil? ? 'null' : %Q("#{@browser}")
+    browser_str = @browser.nil? ? 'null' : %Q("#{browser}")
     
-    if failed? || result.nil?
-      %Q({"failed":true,"browser":#{browser},"version":null,"string":"#{@string}"})
+    if failed?
+      %Q({"failed":true,"browser":#{browser_str},"version":null,"string":"#{string}"})
+    elsif !result.nil?
+      %Q({"result":#{result},"browser":#{browser_str},"version":"#{version.string}","string":"#{string}"})
     else
-      %Q({"result":#{result},"browser":#{browser},"version":"#{@version.string}","string":"#{@string}"})
-    # else
-    #   %Q({"fail":true,"browser":#{browser},"version":"#{@version.string}","string":"#{@string}"})
+      # we must be called by other code or tests (thus don't include failed or result flag)
+      %Q({"browser":#{browser},"version":"#{@version.string}","string":"#{@string}"})
     end
   end
   

@@ -23,6 +23,15 @@ describe "API" do
       last_response.body.must_be_empty
     end
     
+    it "forced default" do
+      get_detect :_forced => true
+      
+      assert last_response.ok?
+      
+      last_response.body.wont_be_empty
+      last_response.body.must_include 'Unknown'
+    end
+    
     it "is empty with redirect" do
       get_detect :redirect => 'http://some.url'
       
@@ -47,6 +56,51 @@ describe "API" do
     end
   end
   
+  describe "with unknown user-agent" do
+    before do
+      header 'User-Agent', 'curl/7.21.6 (x86_64-pc-linux-gnu)'
+    end
+
+    it "is empty for default" do
+      get_detect
+      
+      assert last_response.ok?
+      last_response.body.must_be_empty
+    end
+    
+    it "forced default" do
+      get_detect :_forced => true
+      
+      assert last_response.ok?
+      
+      last_response.body.wont_be_empty
+      last_response.body.must_include 'Unknown'
+    end
+    
+    it "is empty with redirect" do
+      get_detect :redirect => 'http://some.url'
+      
+      assert last_response.ok?
+      last_response.body.must_be_empty
+    end
+    
+    it "returns json with callback" do
+      get_detect :callback => '?'
+      
+      assert last_response.ok?
+      last_response.body.must_include '?('
+
+      body = json_body
+      
+      body['bad'].must_be_nil
+      body['failed'].must_equal true
+      
+      body['string'].must_include 'curl'
+      body['browser'].must_be_nil
+      body['version'].must_be_nil
+    end
+  end  
+  
   describe "matches browser not version" do
     before do
       header 'User-Agent', 'Mozilla/5.0 (compatible; MSIE;)'
@@ -57,6 +111,15 @@ describe "API" do
       
       assert last_response.ok?
       last_response.body.must_be_empty
+    end
+    
+    it "forced default" do
+      get_detect :_forced => true
+      
+      assert last_response.ok?
+      
+      last_response.body.wont_be_empty
+      last_response.body.must_include 'Unknown'
     end
     
     it "is empty with redirect" do
@@ -95,6 +158,15 @@ describe "API" do
       assert last_response.ok?
       last_response.body.must_be_empty
     end
+    
+    it "forced default" do
+      get_detect :_forced => true
+      
+      assert last_response.ok?
+      
+      last_response.body.wont_be_empty
+      last_response.body.must_include 'Microsoft Internet Explorer'
+    end    
 
     it "is empty with redirect" do
       get_detect :redirect => 'http://some.url'

@@ -33,9 +33,8 @@ describe UserAgent do
   describe "to json" do
     it "with full match" do
       str = 'Mozilla/5.0 (compatible; MSIE 6.0;)'
-      json = JSON.parse(user_agent(str).to_json)
+      json = JSON.parse(user_agent(str).to_json(false))
       
-      json['failed'].must_be_nil
       json['browser'].must_equal 'msie'
       json['version'].must_equal '6.0'
       json['string'].must_equal str
