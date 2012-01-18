@@ -81,7 +81,7 @@ class BadBrowser < Sinatra::Base
       
       case browser
       when :msie then version >= '7.0'
-      when :firefox then version >= '3.6.22'
+      when :firefox then version >= '3.6.25'
       when :chrome then version >= '4.1.249'
       when :safari then version >= '4.0'
       when :opera then version >= '9.0'

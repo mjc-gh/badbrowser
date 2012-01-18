@@ -2,7 +2,7 @@
   %h1 Docs
   
   %div.api-toc
-    %h3 The API
+    %h3 API Parameters
     %ul
       %li
         %a{ :href => "#default" } Default
@@ -14,7 +14,7 @@
       %li
         %a{ :href => "#callback" } Callback
       %li
-        %a{ :href => "#Redirect" } Redirect
+        %a{ :href => "#redirect" } Redirect
         
     
     %p ...more coming soon!
@@ -22,6 +22,34 @@
     
   %ul
     %li
+      %h2 Current Bad Browser Versions
+      %p Here is a complete list of the browser versions that we consider to be "bad" or out-of-date:
+      %table
+        %thead
+          %tr.header
+            %th Browser
+            %th Version
+        %tbody
+          %tr
+            %td Microsoft Internet Explorer
+            %td 6.0 and earlier
+          %tr
+            %td Mozilla Firefox
+            %td 3.6.25 and earlier
+          %tr
+            %td Google Chrome
+            %td 4.1.249 and earlier
+          %tr
+            %td Apple Safari
+            %td 4.0 and earlier
+          %tr
+            %td Opera
+            %td 9.0 and earlier
+            
+      %p Note that, within the near future, we will provide an API to customize which versions should be considered "bad" or out-of-date.
+            
+      
+    %li 
       %a{:name => 'default'}
       %h2 Default
       
