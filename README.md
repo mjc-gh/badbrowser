@@ -4,6 +4,8 @@ Welcome to the BadBrowser Core API.
 
 Hosted on Heroku: http://badbrowser.herokuapp.com
 
+As of May 2012, this project has been made public. See LICENSE for more details.
+
 ## INSTALL
 
 #### Install Ruby
