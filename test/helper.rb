@@ -1,4 +1,6 @@
+require 'yaml'
 require 'json'
+
 require 'bundler'
 Bundler.require :default, :test
 
