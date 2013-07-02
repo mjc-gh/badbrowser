@@ -1,25 +1,25 @@
 .wrap.container.docs
   %h1 Docs
-  
+
   %div.api-toc
     %h3 API Parameters
     %ul
       %li
         %a{ :href => "#default" } Default
-        
+
         %ul
           %li
             %a{ :href => "#link" } Link
-      
+
       %li
         %a{ :href => "#callback" } Callback
       %li
         %a{ :href => "#redirect" } Redirect
-        
-    
+
+
     %p ...more coming soon!
-    
-    
+
+
   %ul
     %li
       %h2 Current Bad Browser Versions
@@ -45,73 +45,73 @@
           %tr
             %td Opera
             %td 9.0 and earlier
-            
+
       %p Note that, within the near future, we will provide an API to customize which versions should be considered "bad" or out-of-date.
-            
-      
-    %li 
+
+
+    %li
       %a{:name => 'default'}
       %h2 Default
-      
-      %p 
-        By default, our API will generate some Javascript to show a notification at the top of the page. 
+
+      %p
+        By default, our API will generate some Javascript to show a notification at the top of the page.
         The appearance is designed to be informative without being obtrusive. You can preview the notification on our
         %a{:href => '/demo'} demo
-        page. Note that, in our demo, we are using the <code>_forced</code> parameter to always render a response. Normally, only when a 
+        page. Note that, in our demo, we are using the <code>_forced</code> parameter to always render a response. Normally, only when a
         "bad" browser is detected does the response include the an actual redirect.
-        
-      
+
+
       %ul
         %li
           %a{:name => 'link'}
           %h3 Link
-          
-          %p 
-            This link parameters lets you define the "click here" href attribute of the anchor element included within 
-            the default notifcation. This can be relative path or full URI. It must be escaped. 
+
           %p
-            The generated URL will include a 
+            This link parameters lets you define the "click here" href attribute of the anchor element included within
+            the default notifcation. This can be relative path or full URI. It must be escaped.
+          %p
+            The generated URL will include a
             %code for
-            query parameter that indicates the type of browser being used. When using a custom URL, it is recommend that you use this 
+            query parameter that indicates the type of browser being used. When using a custom URL, it is recommend that you use this
             parameter to provide the user with an update URL for that specific browser. Here is a values for this parameter are:
             <code>"msie"</code>, <code>"firefox"</code>, <code>"chrome"</code>, <code>"safari"</code> and <code>"opera"</code>.
-        
-      
+
+
     %li
       %a{:name => 'callback'}
       %h2 Callback
-      
-      %p 
-        This parameter exposes a basic JSON with Padding (JSONP) API. The callback must be function accessible from the global scope. 
+
+      %p
+        This parameter exposes a basic JSON with Padding (JSONP) API. The callback must be function accessible from the global scope.
         Alternatively, developers can use the JSONP features available in jQuery and other libraries which allow for easier management of JSONP requests.
       %p
-        Unlike the default and redirect options, the callback option will always respond with some content. Specifically, the callback function will be called
-        with an object that always contains a <code>browser</code>, <code>version</code> and <code>string</code> property. The <code>browser</code> and 
-        <code>version</code> fields will be set to what we've detected from the user's request. The <code>string</code> property is always set to the 
+        Unlike the default and redirect options, the callback option will always respond with an object. Specifically, the callback function will be called
+        with an object that always contains a <code>browser</code>, <code>version</code> and <code>string</code> property. The <code>browser</code> and
+        <code>version</code> fields will be set to what we've detected from the user's request. The <code>string</code> property is always set to the
         raw user-agent string and is always present. This may be an empty string however, if the request did not include a user-agent.
       %p
-        Additionally, there may will be either a <code>result</code> property or a <code>failed</code> property included within the JSON response. 
-        If <code>failed</code> is present (and <code>true</code>), it will indicate that we were unable to indentify which browser and version the user is using. 
-        If the request <code>failed</code>, we still may have been able to detect the browser vendor.
-      %p        
+        Additionally, there will either be a <code>result</code> property or a <code>failed</code> property included within the JSON response.
+        If <code>failed</code> is present (and <code>true</code>), it will indicate that we were unable to indentify which browser and version the user is using.
+        Even ff the request <code>failed</code>, we still may have been able to detect the browser vendor.
+      %p
         Finally, The <code>result</code> property will be a boolean value where <code>false</code> indicates an outdated or "bad" browser. This field will only be
         present if the request did not fail and we were able to correctly indentify the browser vendor and version.
-        
+
       %p
         For a preview of this option, <a target="_blank" href="/detect.js?callback=%3F">click here</a>.
-      
+
     %li
       %a{:name => 'redirect'}
       %h2 Redirect
-      
-      %p 
+
+      %p
         Will cause a redirect in the event of a bad browser being detected. This can be relative path or full URI. It must be escaped. The callback itself is achieved
-        using a JavaScript redirect. 
+        using a JavaScript redirect.
         %a{:href => '/detect.js?redirect=%2Fsome%2Furl%2Fhere&_forced=1', :target => '_blank'} Click here
-        to preview this type of response. Note that, in this preview, we are using the <code>_forced</code> parameter to always render a response. Normally, only when a 
+        to preview this type of response. Note that, in this preview, we are using the <code>_forced</code> parameter to always render a response. Normally, only when a
         "bad" browser is detected does the response include the an actual redirect.
-      
-  %p 
+
+  %p
     Any suggestions for the API are more than welcome!
     %br
     Feel free to Tweet at us!

@@ -1,7 +1,7 @@
 - if redirect_to
   -# Redirect via Javascript
   window.location = '#{redirect_to}';
-  
+
 - elsif callback
   -# JSONP callback
   #{callback}(#{user_agent.to_json(result)})

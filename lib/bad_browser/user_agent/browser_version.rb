@@ -13,16 +13,16 @@ class BrowserVersion
     @string = version.to_s
     @parsed = parse @string
   end
-  
+
   ##
   # Most of the logic in this method is borrowed from Gem::Version#<=>
   def <=>(other)
     other_str = self.class === other ? other.string : other.to_s
     return 0 if @string == other_str
-    
+
     lhs_parsed, rhs_parsed = @parsed, parse(other_str)
     limit = (lhs_parsed.size > rhs_parsed.size ? lhs_parsed.size : rhs_parsed.size) - 1
-    
+
     i = 0
     while i <= limit do
       lhs, rhs = lhs_parsed[i] || 0, rhs_parsed[i] || 0
@@ -34,12 +34,12 @@ class BrowserVersion
       return  1 if Numeric === lhs && String === rhs
       return lhs <=> rhs
     end
-    
+
     return 0
   end
-  
+
   protected
-  
+
   ##
   # Logic in this method borrowed from Gem::Version#segments
   def parse(version)
