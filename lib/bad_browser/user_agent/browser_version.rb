@@ -6,7 +6,6 @@ class BrowserVersion
   include Comparable
   attr_reader :string, :parsed
 
-  ##
   # Will convert the version argument to a string
   # and proceed to parse it and save the results
   def initialize(version)
@@ -14,7 +13,6 @@ class BrowserVersion
     @parsed = parse @string
   end
 
-  ##
   # Most of the logic in this method is borrowed from Gem::Version#<=>
   def <=>(other)
     other_str = self.class === other ? other.string : other.to_s
@@ -40,7 +38,6 @@ class BrowserVersion
 
   protected
 
-  ##
   # Logic in this method borrowed from Gem::Version#segments
   def parse(version)
     version.scan(/[0-9]+|[A-z]+/).map! do |str|

@@ -22,7 +22,6 @@ class UserAgent
   def safari?; @browser == :safari; end
   def opera?; @browser == :opera; end
 
-  ##
   # Convert object to a JSON representation for public consumption. Can easily use a JSON gem
   # but it's just faster to build it by hand
   def to_json(result = nil)
@@ -40,7 +39,6 @@ class UserAgent
 
   protected
 
-  ##
   # Main driver of user-agent detection. This method will run a bunch of RegExs to try and match
   # the supplied string. It matches from most popular to least popular with the exception of
   # Opera. We have to check for opera first (via String#include?) and "jump" away since
@@ -55,7 +53,6 @@ class UserAgent
     match_safari
   end
 
-  ##
   # We need a special method just for Opera since it's user agent strings are a nightmare (see fixtures).
   # Opera's user-agent include various tokens and strings that try to make it look like MSIE or Firefox
   # Always set @opera as well since we know it is Opera at this point
@@ -71,7 +68,6 @@ class UserAgent
     end
   end
 
-  ##
   # version map for Safari
   @@safari_map = {
     :'2.0.4' => ['418.8', '419'], :'2.0.3' => ['417.9', '418'], :'2.0.2' => ['416.11', '416.12'], :'2.0.1' => ['412.7', '412.7'], :'2.0' => ['412', '412.6.2'],
@@ -79,7 +75,6 @@ class UserAgent
     :'1.2.3' => ['125.4', '125.5'], :'1.2.2' => ['125.2', '125.2'], :'1.2' => ['124', '124'],  :'1.0.3' => ['85.8.2', '85.8.5'], :'1.0' => ['85.7', '85.7']
   }
 
-  ##
   # We need a special method just to handle Safari since it's user agent strings are not
   # as easily parsed as other browsers. If everything fails, we will at least look for 'Safari'
   # in the user-agent string to positively match the vendor.
@@ -98,7 +93,6 @@ class UserAgent
     end
   end
 
-  ##
   # Tries to match the user agent for the supplied browser via regex. The regex's are written so
   # we at least can match the vendor. It's key this method returns a "trueish" value if any
   # match is made (thus halting the OR chain in detect_user_agent)
@@ -109,7 +103,6 @@ class UserAgent
     @browser = browser if match
   end
 
-  ##
   # Helper to make regex parsing a bit friendlier. It will convert the results to
   # an array and remove any nil or empty elements (or return nil if not match, the default behaviour)
   def match_agent(regex)
