@@ -47,7 +47,7 @@ class UserAgent
     # "jump away" for Opera using String#include? since it's quicker than regex at this point
     return match_opera if @string.include?('Opera')
 
-    match_with(:msie, /MSIE[ ]*(\d{1,2}\.[\dbB]{1,3})*/)      or
+    match_with(:msie, /MSIE[ ]*(\d{1,2}\.[\dbB]{1,3})*|Trident\/[0-9\.]+;[ ]*rv (\d{2}\.\d{1,2})/)      or
     match_with(:firefox, /Firefox[ \(\/]*([a-z0-9\.\-\+]*)/i) or
     match_with(:chrome, /Chrome\/([\d\.]+)*/)                 or
     match_safari
